@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ── Media ─────────────────────────────────────────────────────────────
+# YouTube.mp4 (the episode file this repo is built around) is intentionally
+# NOT tracked: a full-length episode blows past GitHub's 100 MB file limit.
+# Keep it next to this .gitignore at the repo root, and the server picks it
+# up automatically. To track it anyway: git add -f YouTube.mp4
+YouTube.mp4
+youtube.mp4
+*.mp4
+*.m4v
+*.mkv
+*.mov
+*.avi
+*.webm
+*.flv
+*.wmv
+*.ts
+*.m3u8
+
+# ...but keep tiny web assets (posters/graphics) tracked
+!public/assets/**/*.jpg
+!public/assets/**/*.png
+!public/assets/**/*.webp
+!assets/posters/*.jpg
+!assets/posters/*.png
+!assets/thumbnails/*.jpg
+!assets/thumbnails/*.png
+!screenshot16_9.jpg
+
+# Generated / derived media
+/converted/
+/output/
+/downloads/
+*.part
+*.crdownload
+
+# ── Python ────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ── Editors / OS ──────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# ── Logs & temp ───────────────────────────────────────────────────────
+*.log
+.cache/
+tmp/
+.tmp/

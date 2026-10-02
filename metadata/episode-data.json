@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "lastUpdated": "2026-10-02",
+  "show": {
+    "title": "Love & Hip Hop: New York",
+    "shortTitle": "Love & Hip Hop NY",
+    "network": "VH1",
+    "franchise": "Love & Hip Hop",
+    "genre": ["Reality TV", "Music", "Drama"],
+    "country": "United States",
+    "language": "en-US",
+    "seasonsAired": 10,
+    "firstAired": "2011-01-10"
+  },
+  "season": {
+    "number": 3,
+    "episodeCount": 14,
+    "airedFrom": "2013-01-07",
+    "airedTo": "2013-04-15",
+    "producers": [
+      "Mona Scott-Young (Monami Entertainment)",
+      "Toby Barraud (NFGTV)",
+      "Stefan Springman (NFGTV)",
+      "Shelly Tatro (VH1)",
+      "Brad Abramson (VH1)",
+      "Danielle Gelfand (VH1)",
+      "Jeff Olde (VH1)"
+    ]
+  },
+  "episode": {
+    "seasonNumber": 3,
+    "episodeNumber": 14,
+    "seriesNumber": 34,
+    "title": "Reunion: Part 2",
+    "slug": "season-3-reunion-part-2",
+    "type": "reunion-special",
+    "reunionPart": 2,
+    "host": "Mona Scott-Young",
+    "airDate": "2013-04-15",
+    "airDay": "Monday",
+    "timeSlot": "8/7c",
+    "runtimeMinutes": 42,
+    "contentRating": "TV-14",
+    "usViewersMillions": 2.35,
+    "tagline": "All new Love and Hip Hop: The Reunion Part 2 Mon + 8/7C on VH1",
+    "logline": "The drama unfolds as the ladies of Love & Hip Hop NY reunite to get into all the issues, the beef, and the madness that occurred during and after the cameras rolled.",
+    "synopsis": "Part two of the season three reunion picks up where part one left off. Host Mona Scott-Young keeps the cast of Love & Hip Hop: New York on the hot seat as the season's unresolved beefs, love triangles and off-camera fallout get sorted out in front of a studio audience. Filmed in front of the signature purple diamond wall, the special pairs the ladies of the cast with the men at the center of the season's drama for one last round of receipts, reveals and walk-offs before the season is officially closed out.",
+    "themes": [
+      "Reunion special",
+      "Season finale",
+      "Love triangles",
+      "Cast confrontations",
+      "On-stage reveals"
+    ],
+    "chaptersFile": "metadata/timestamps.json",
+    "thumbnail": "assets/thumbnails/reunion-part-2-16x9.jpg",
+    "poster": "assets/posters/reunion-part-2-poster.jpg"
+  },
+  "cast": [
+    { "name": "Mona Scott-Young", "credit": "Host", "role": "host", "initials": "MS" },
+    { "name": "Erica Mena", "credit": "Self", "role": "main", "initials": "EM" },
+    { "name": "Yandy Smith-Harris", "credit": "Self (as Yandy Smith)", "role": "main", "initials": "YS" },
+    { "name": "Tahiry Jose", "credit": "Self", "role": "main", "initials": "TJ" },
+    { "name": "Jen Bayer", "credit": "Self (as Jen the Pen)", "role": "main", "initials": "JB" },
+    { "name": "Raqi Thunda", "credit": "Self", "role": "main", "initials": "RT" },
+    { "name": "Winter Ramos", "credit": "Self", "role": "main", "initials": "WR" },
+    { "name": "Rashidah Ali", "credit": "Self", "role": "main", "initials": "RA" },
+    { "name": "Joe Budden", "credit": "Self", "role": "guest", "initials": "JB" },
+    { "name": "Rich Dollaz", "credit": "Self", "role": "guest", "initials": "RD" },
+    { "name": "Consequence", "credit": "Self", "role": "guest", "initials": "CQ" },
+    { "name": "Olivia Longott", "credit": "Self", "role": "guest", "initials": "OL" },
+    { "name": "Kaylin Garcia", "credit": "Self", "role": "guest", "initials": "KG" },
+    { "name": "Jewel Escobar", "credit": "Self", "role": "guest", "initials": "JE" },
+    { "name": "Funkmaster Flex", "credit": "Self", "role": "guest", "initials": "FF" },
+    { "name": "Tiffany Lewis", "credit": "Self", "role": "guest", "initials": "TL" },
+    { "name": "Lore'l", "credit": "Self", "role": "guest", "initials": "LO" },
+    { "name": "Mendeecees Harris", "credit": "Self (archive footage)", "role": "archive", "initials": "MH" },
+    { "name": "Lisa Ribacoff", "credit": "Self — Certified Polygraph Examiner", "role": "specialist", "initials": "LR" }
+  ],
+  "crew": [
+    { "name": "Mona Scott-Young", "department": "Executive Producer" },
+    { "name": "Toby Barraud", "department": "Executive Producer" },
+    { "name": "Stefan Springman", "department": "Executive Producer" },
+    { "name": "Ruth Sinanian", "department": "Writer" },
+    { "name": "Kim Osorio", "department": "Writer" },
+    { "name": "Monami Entertainment", "department": "Production Company" },
+    { "name": "NFGTV", "department": "Production Company" },
+    { "name": "Interloc Films", "department": "Production Company" }
+  ],
+  "media": {
+    "primaryFile": "YouTube.mp4",
+    "searchPaths": [
+      "YouTube.mp4",
+      "assets/videos/YouTube.mp4",
+      "assets/YouTube.mp4",
+      "media/YouTube.mp4",
+      "video/YouTube.mp4"
+    ],
+    "supportedFormats": ["MP4", "M4V", "MKV", "AVI", "MOV"],
+    "specs": {
+      "resolution": "1920x1080",
+      "resolutionLabel": "1080p (Full HD)",
+      "frameRate": 29.97,
+      "videoCodec": "H.264 (AVC)",
+      "audioCodec": "AAC",
+      "audioBitrateKbps": 128,
+      "container": "MP4",
+      "aspectRatio": "16:9"
+    },
+    "streaming": {
+      "rangeRequests": true,
+      "dashOrHls": false,
+      "note": "Served progressively over HTTP with byte-range support so the player can seek instantly."
+    }
+  },
+  "seasonEpisodes": [
+    { "number": 1, "title": "Season 3 Premiere", "airDate": "2013-01-07" },
+    { "number": 2, "title": "Episode 2", "airDate": "2013-01-14" },
+    { "number": 3, "title": "Episode 3", "airDate": "2013-01-21" },
+    { "number": 4, "title": "Episode 4", "airDate": "2013-01-28" },
+    { "number": 5, "title": "Episode 5", "airDate": "2013-02-04" },
+    { "number": 6, "title": "Episode 6", "airDate": "2013-02-11" },
+    { "number": 7, "title": "Episode 7", "airDate": "2013-02-18" },
+    { "number": 8, "title": "Episode 8", "airDate": "2013-02-25" },
+    { "number": 9, "title": "Episode 9", "airDate": "2013-03-04" },
+    { "number": 10, "title": "Episode 10", "airDate": "2013-03-11" },
+    { "number": 11, "title": "Episode 11", "airDate": "2013-03-18" },
+    { "number": 12, "title": "Episode 12", "airDate": "2013-03-25" },
+    { "number": 13, "title": "The Reunion (Part I)", "airDate": "2013-04-09" },
+    { "number": 14, "title": "Reunion: Part 2", "airDate": "2013-04-15", "isCurrent": true }
+  ],
+  "sources": [
+    { "label": "Love & Hip Hop: New York (Season 3) — episode list and airdates", "url": "https://love-hip-hop.fandom.com/wiki/Love_%26_Hip_Hop:_New_York_(Season_3)" },
+    { "label": "IMDb — Love and Hip Hop: New York, S3.E14 'Reunion: Part 2' (2013)", "url": "https://www.imdb.com/title/tt2817076/" },
+    { "label": "Moviefone — Love & Hip Hop New York Season 3 episode guide", "url": "https://www.moviefone.com/tv-shows/love-hip-hop-new-york/5Mn9pt8CuEsi3NKgEtxby2/seasons/3/" }
+  ],
+  "rights": "This repository is for informational and archival purposes only. Love & Hip Hop, Love & Hip Hop: New York and all related marks, footage and artwork are the property of VH1 / Paramount and their respective owners. No rights are granted or implied."
+}

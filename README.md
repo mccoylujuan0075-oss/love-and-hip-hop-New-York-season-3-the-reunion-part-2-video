@@ -2,7 +2,12 @@
 
 All new Love and Hip Hop: The Reunion Part 2 Mon + 8/7C on VH1
 
-A complete, working watch page for the episode — `YouTube.mp4` in, cinematic player out.
+Two complete, working watch pages sharing one player — `YouTube.mp4` in, cinematic player out.
+
+| Page | Route | Video it streams |
+| --- | --- | --- |
+| **Love & Hip Hop: New York** — S3 E14 "Reunion: Part 2" | `/` | `YouTube.mp4` |
+| **Basketball Wives** — Reunion Sneak Peek | `/basketball-wives` | `Basketball Wives Reunion Sneak Peek.mp4` (falls back to a generated placeholder reel) |
 
 [![Watch](https://img.shields.io/badge/watch-npm%20start-f0c75e)](#quick-start)
 [![Episode](https://img.shields.io/badge/S3%20E14-Reunion%20Part%202-7c3aed)](#episode-details)
@@ -27,7 +32,9 @@ metadata API, the container tooling — exists to present that file.
 | **Streaming server** | Zero dependencies (Node built-ins only), HTTP 206 range support, hot-swaps the video with no restart |
 | **Metadata API** | `/api/episode` and `/api/video-info` serve the JSON in `metadata/` to the page |
 | **Tooling** | `metadata-parser.py` reads MP4 internals with no ffmpeg; `video-converter.sh` remuxes/re-encodes |
-| **Docs** | Episode guide, cast & crew, run-of-show breakdown |
+| **Two shows, one player** | Each page declares `<html data-show>`; one implementation, per-show media and metadata |
+| **Placeholder reels** | No clip yet? `scripts/make-placeholder-reel.sh` renders an original, watermarked MP4 with real chapter timecodes so the pipeline is demonstrable |
+| **Docs** | Episode guide, cast & crew, run-of-show breakdown, clip notes |
 
 ---
 
@@ -50,15 +57,25 @@ video into it (see below). Nothing else on the page is blocked by it.
 
 ---
 
-## Where `YouTube.mp4` goes
+## Where the video files go
 
 The server looks for the file in this order and picks the first one it finds:
 
+**Love & Hip Hop page (`/`)** — expects `YouTube.mp4`:
+
 1. `$VIDEO_FILE` — explicit path override
-2. **`YouTube.mp4` in the repository root** ← this is the expected spot
+2. **`YouTube.mp4` in the repository root** ← the expected spot
 3. Any other `.mp4` `.m4v` `.mkv` `.mov` `.avi` `.webm` in the root
 4. `assets/videos/` · `assets/` · `media/` · `video/` · `public/` · `assets/media/` (same name first)
-5. `$VIDEO_URL` — stream straight from a CDN instead of a local file
+5. `$VIDEO_URL` — stream straight from a CDN
+
+**Basketball Wives page (`/basketball-wives`)** — expects `Basketball Wives Reunion Sneak Peek.mp4`
+(also accepts `Basketball Wives Reunion Sneak Peek - YouTube.mp4`, `BasketballWives-Reunion-SneakPeek.mp4`,
+`basketball-wives-reunion-sneak-peek.mp4`, in the root or in `media/`). If none is present it streams
+`media/placeholder/basketball-wives-reunion-reel.mp4` — an original generated reel, watermarked `PLACEHOLDER`
+throughout, containing no broadcast footage. Regenerate it with `npm run reel`.
+
+Each page only ever streams its own show's file — the shows never cross over.
 
 ```bash
 npm start                                  # picks up ./YouTube.mp4
@@ -139,9 +156,9 @@ A single page, no framework, ~30 KB of vanilla JS:
 | Endpoint | Returns |
 | --- | --- |
 | `GET /` | The watch page |
-| `GET /api/episode` | Episode + show + season + cast + crew + chapters + season guide (JSON) |
-| `GET /api/video-info` | Whether a video was found, where, its size, and the player's target specs |
-| `GET /media/<file>` | The video itself — `Accept-Ranges: bytes`, HTTP 206, `?download=1` to force a download |
+| `GET /api/episode` · `GET /api/bw-episode` | Episode + show + season + cast + crew + chapters + season guide (JSON) |
+| `GET /api/video-info` · `GET /api/bw-video-info` | Whether a video was found, where, its size, and the player's target specs |
+| `GET /media/<file>` · `GET /media/<show>/stream` | The video itself — `Accept-Ranges: bytes`, HTTP 206, `?download=1` to force a download |
 | `GET /healthz` | Liveness + whether media is currently available |
 | `GET /docs/…` `GET /metadata/…` `GET /assets/…` | Read-only static mounts |
 
@@ -154,13 +171,17 @@ scrubbing, resuming and Safari playback work off a single progressive MP4.
 
 ```
 ├── README.md
-├── YouTube.mp4                ← the episode (not committed; see above)
+├── YouTube.mp4                ← the L&HH episode (not committed; see above)
+├── Basketball Wives Reunion Sneak Peek.mp4   ← the BW clip (optional; placeholder streams without it)
+├── media/placeholder/         generated placeholder reels (committed)
 ├── package.json               npm start / check / info / convert
 ├── .gitignore
-├── public/                    the watch page (served at /)
-│   ├── index.html
-│   ├── styles.css             purple diamond wall + gold sofa palette
-│   ├── app.js                 player + metadata rendering (no dependencies)
+├── public/                    the watch pages
+│   ├── index.html             Love & Hip Hop page
+│   ├── basketball-wives.html  Basketball Wives page
+│   ├── styles.css             shared design system (purple/gold L&HH palette)
+│   ├── bw.css                 Basketball Wives theme layer (court amber)
+│   ├── app.js                 player + metadata rendering, show-aware (no dependencies)
 │   └── assets/
 │       ├── img/favicon.svg
 │       ├── posters/reunion-part-2-poster.jpg
@@ -169,14 +190,18 @@ scrubbing, resuming and Safari playback work off a single progressive MP4.
 │   ├── server.js              static + streaming server (Node built-ins only)
 │   └── check.js               repo readiness check
 ├── docs/
-│   ├── episode-guide.md       run of show, threads, production credits
-│   └── cast-info.md           host, cast, guests, crew
+│   ├── episode-guide.md       L&HH: run of show, threads, production credits
+│   ├── cast-info.md           L&HH: host, cast, guests, crew
+│   └── basketball-wives-clip.md   BW: clip notes + what still needs verifying
 ├── metadata/
-│   ├── episode-data.json      single source of truth for everything on the page
-│   └── timestamps.json        chapter markers + runtime
+│   ├── episode-data.json                  L&HH: single source of truth for the page
+│   ├── timestamps.json                    L&HH: chapter markers + runtime
+│   ├── basketball-wives-data.json         BW: clip data, cast, season context
+│   └── basketball-wives-timestamps.json   BW: real timecodes for the placeholder reel
 ├── scripts/
 │   ├── video-converter.sh     remux / re-encode / web profile
-│   └── metadata-parser.py     container inspector (no ffmpeg required)
+│   ├── metadata-parser.py     container inspector (no ffmpeg required)
+│   └── make-placeholder-reel.sh   render an original placeholder MP4 + poster + chapters
 └── assets/
     ├── thumbnails/            16:9 stills (1280×720, 640×360)
     └── posters/               poster art (1280×720)
@@ -219,6 +244,31 @@ show/season/episode metadata.
 ```bash
 npm run check          # 25-point readiness check
 npm run check -- --fix # create any missing folders
+```
+
+---
+
+## Placeholder reels
+
+When the real video isn't in the repo, a page can still demonstrate the entire pipeline by streaming an
+**original generated placeholder** instead. Nothing is faked: the reel is clearly watermarked, contains no
+broadcast footage, and its chapter markers are genuinely accurate for that file.
+
+```bash
+npm run reel        # rebuild the Basketball Wives reel + poster + chapter JSON
+```
+
+`scripts/make-placeholder-reel.sh` renders a 1080p29.97 H.264 + AAC MP4 with ffmpeg's `drawtext`, an original
+court diagram, a bouncing ball and a live timecode, then writes a matching poster and a chapters file whose
+timecodes are exact for the reel. Point it at any show:
+
+```bash
+./scripts/make-placeholder-reel.sh \
+  --show "Some Show" --subtitle "Reunion Sneak Peek" \
+  --out media/placeholder/some-show-reel.mp4 \
+  --poster public/assets/posters/some-show.jpg \
+  --chapters metadata/some-show-timestamps.json \
+  --duration 180
 ```
 
 ---
@@ -283,6 +333,8 @@ Keep video files out of commits.
 | Seeking jumps back to the start | Your server isn't honoring range requests. Use `npm start`, which does |
 | Port 3000 is taken | `PORT=8080 npm start` (the server also auto-increments if the port is busy) |
 | Metadata changes don't show up | The JSON is fetched fresh each load — hard-reload the page; check `/api/episode` responds |
+| Basketball Wives page plays a placeholder | Expected until `Basketball Wives Reunion Sneak Peek.mp4` is in the repo — drop it in and reload |
+| Placeholder reel won't render | Needs ffmpeg built with libfreetype (for `drawtext`); court artwork additionally needs ImageMagick |
 
 ---
 

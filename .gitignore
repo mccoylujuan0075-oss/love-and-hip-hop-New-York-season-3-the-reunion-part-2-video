@@ -22,7 +22,10 @@ youtube.mp4
 *.ts
 *.m3u8
 
-# ...but keep tiny web assets (posters/graphics) tracked
+# ...but keep tiny web assets (posters/graphics) and the small generated
+# placeholder reels tracked — they are original graphics, not broadcast footage,
+# and they're what makes the player demonstrable without the real file.
+!media/placeholder/*.mp4
 !public/assets/**/*.jpg
 !public/assets/**/*.png
 !public/assets/**/*.webp

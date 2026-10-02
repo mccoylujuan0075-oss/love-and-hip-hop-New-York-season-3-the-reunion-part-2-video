@@ -119,6 +119,8 @@ checkFile('docs/cast-info.md');
 section('Metadata');
 const episodeData = checkJSON('metadata/episode-data.json');
 checkJSON('metadata/timestamps.json');
+const bwData = checkJSON('metadata/basketball-wives-data.json');
+checkJSON('metadata/basketball-wives-timestamps.json');
 
 section('Watch page');
 checkFile('public/index.html');
@@ -128,10 +130,18 @@ checkFile('public/assets/img/favicon.svg', { required: false });
 checkFile('public/assets/posters/reunion-part-2-poster.jpg', { required: false });
 checkFile('public/assets/thumbnails/reunion-part-2-16x9.jpg', { required: false });
 
+section('Watch page — Basketball Wives');
+checkFile('public/basketball-wives.html');
+checkFile('public/bw.css');
+checkFile('public/assets/img/bw-favicon.svg', { required: false });
+checkFile('public/assets/posters/basketball-wives-reunion-poster.jpg', { required: false });
+checkFile('docs/basketball-wives-clip.md', { required: false });
+
 section('Tooling');
 checkFile('server/server.js');
 checkFile('scripts/metadata-parser.py', { required: false });
 checkFile('scripts/video-converter.sh', { required: false });
+checkFile('scripts/make-placeholder-reel.sh', { required: false });
 checkFile('package.json');
 checkFile('.gitignore', { required: false });
 
@@ -149,7 +159,32 @@ if (videoPath) {
     `${mb.toFixed(1)} MB · modified ${st.mtime.toISOString().slice(0, 16).replace('T', ' ')}` +
     (rel === PRIMARY ? '' : ` — expected the file to be named ${PRIMARY}`));
 } else {
-  record('warn', PRIMARY, 'not in the repo yet — the site runs and shows the add-your-file locker');
+  record('warn', PRIMARY, 'not in the repo yet — the L&HH page runs and shows the add-your-file locker');
+}
+
+const BW_NAMES = [
+  'Basketball Wives Reunion Sneak Peek.mp4',
+  'Basketball Wives Reunion Sneak Peek - YouTube.mp4',
+  'BasketballWives-Reunion-SneakPeek.mp4'
+];
+let bwReal = null;
+for (const name of BW_NAMES) {
+  for (const dir of ['', 'media', 'assets/videos', 'assets']) {
+    const p = path.join(ROOT, dir, name);
+    if (fs.existsSync(p) && fs.statSync(p).isFile() && fs.statSync(p).size > 0) { bwReal = p; break; }
+  }
+  if (bwReal) break;
+}
+const bwReel = path.join(ROOT, 'media/placeholder/basketball-wives-reunion-reel.mp4');
+if (bwReal) {
+  const st = fs.statSync(bwReal);
+  record('ok', path.relative(ROOT, bwReal), `${(st.size / 1024 / 1024).toFixed(1)} MB · real clip in place`);
+} else if (fs.existsSync(bwReel) && fs.statSync(bwReel).size > 0) {
+  const st = fs.statSync(bwReel);
+  record('warn', 'media/placeholder/basketball-wives-reunion-reel.mp4',
+    `${(st.size / 1024 / 1024).toFixed(1)} MB placeholder — drop ${BW_NAMES[0]} for the real clip`);
+} else {
+  record('warn', BW_NAMES[0], 'no clip and no placeholder reel — run: npm run reel');
 }
 
 const json = process.argv.includes('--json');
@@ -186,6 +221,10 @@ if (!AS_JSON) {
   if (episodeData && episodeData.episode) {
     const e = episodeData.episode;
     console.log(`  ${C.d}${episodeData.show.title} — S${e.seasonNumber} E${e.episodeNumber} "${e.title}" · ${e.airDate} · ${episodeData.show.network}${C.o}`);
+  }
+  if (bwData && bwData.episode) {
+    const e = bwData.episode;
+    console.log(`  ${C.d}${bwData.show.title} — ${e.title} · ${e.seasonHalf || 'S' + e.seasonNumber} · ${bwData.show.network}${C.o}`);
   }
   console.log('');
 }

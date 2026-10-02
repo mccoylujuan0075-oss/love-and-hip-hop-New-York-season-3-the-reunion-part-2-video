@@ -451,8 +451,8 @@ def analyse(path: Path, want_json: bool) -> Report:
 
 def print_report(rep: Report) -> None:
     print()
-    print(f"{BOLD}{GOLD}Love & Hip Hop: New York · S3 E14 · Reunion: Part 2{OFF}")
-    print(f"{DIM}container metadata report — metadata-parser.py v{VERSION}{OFF}")
+    print(f"{BOLD}{GOLD}Watch-pages media · container metadata report{OFF}")
+    print(f"{DIM}metadata-parser.py v{VERSION} — Love & Hip Hop: New York S3 E14 · Basketball Wives Reunion Sneak Peek{OFF}")
     print("─" * 68)
     print(f"  file          {rep.file}")
     if not rep.exists:

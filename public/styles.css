@@ -111,6 +111,8 @@ h1, h2, h3, h4 { margin: 0; line-height: 1.14; }
 }
 .site-nav a:hover, .site-nav a.active { color: #fff; background: rgba(168,85,247,.18); }
 .site-nav a.active { color: var(--gold-1); }
+.site-nav a.nav-cross { color: var(--muted-2); border: 1px dashed var(--panel-line); }
+.site-nav a.nav-cross:hover { color: #fff; border-color: rgba(240,199,94,.45); }
 
 .header-badges { display: flex; gap: 8px; align-items: center; }
 

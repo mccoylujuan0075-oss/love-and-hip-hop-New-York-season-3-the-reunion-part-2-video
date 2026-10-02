@@ -10,8 +10,35 @@
 
 'use strict';
 
-const PRIMARY_NAME = 'YouTube.mp4';
-const STORE_KEY = 'lhhny.s3e14.position';
+/* ------------------------------------------------------------------ *
+ * Show configuration
+ *
+ * One player implementation drives every watch page in this repo.
+ * The page declares which show it is with <html data-show="…">.
+ * ------------------------------------------------------------------ */
+const SHOWS = {
+  lhhny: {
+    key: 'lhhny',
+    primaryName: 'YouTube.mp4',
+    storeKey: 'lhhny.s3e14.position',
+    episodeApi: '/api/episode',
+    videoApi: '/api/video-info',
+    showName: 'Love & Hip Hop: New York',
+    episodeLabel: 'S3 E14 · VH1'
+  },
+  bw: {
+    key: 'bw',
+    primaryName: 'Basketball Wives Reunion Sneak Peek.mp4',
+    storeKey: 'bw.s11reunion.peek.position',
+    episodeApi: '/api/bw-episode',
+    videoApi: '/api/bw-video-info',
+    showName: 'Basketball Wives',
+    episodeLabel: 'Reunion Sneak Peek · VH1'
+  }
+};
+const SHOW = SHOWS[document.documentElement.dataset.show] || SHOWS.lhhny;
+const PRIMARY_NAME = SHOW.primaryName;
+const STORE_KEY = SHOW.storeKey;
 const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -119,15 +146,20 @@ function loadSource(url, meta = {}) {
   video.load();
   shell.classList.add('has-media');
   state.source = meta.source || 'file';
+  const spec = meta.player || {};
   $('#stripSource').textContent = meta.fileName || PRIMARY_NAME;
-  $('#stripFormat').textContent = meta.format || 'MP4 · H.264';
-  $('#stripQuality').textContent = meta.quality || '1080p · 29.97 fps';
-  $('#stripAudio').textContent = meta.audio || 'AAC · 128 kbps';
+  $('#stripFormat').textContent = meta.format
+    || [spec.container || 'MP4', spec.videoCodec ? spec.videoCodec.replace(/ \(AVC\)/, '') : 'H.264'].join(' · ');
+  $('#stripQuality').textContent = meta.quality
+    || [spec.resolutionLabel || '1080p', spec.frameRate ? spec.frameRate + ' fps' : '29.97 fps'].join(' · ');
+  $('#stripAudio').textContent = meta.audio
+    || [spec.audioCodec || 'AAC', spec.audioBitrateKbps ? spec.audioBitrateKbps + ' kbps' : ''].filter(Boolean).join(' · ');
   const bits = [];
   if (meta.fileName) bits.push(meta.fileName);
   if (meta.sizeLabel) bits.push(meta.sizeLabel);
   if (meta.source === 'external') bits.push('streaming from an external URL');
   else if (meta.source === 'local') bits.push('local preview — nothing uploaded');
+  else if (meta.source === 'placeholder') bits.push('generated placeholder reel — original graphics, not broadcast footage');
   if (meta.source !== 'local') bits.push('byte-range seeking enabled');
   setNote(bits.join(' · '));
   return true;
@@ -144,21 +176,31 @@ function showLocker(message) {
 async function checkVideoInfo({ silent = false } = {}) {
   const status = $('#heroStatus');
   try {
-    const res = await fetch('/api/video-info?ts=' + Date.now(), { cache: 'no-store' });
+    const res = await fetch(SHOW.videoApi + '?ts=' + Date.now(), { cache: 'no-store' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const info = await res.json();
     if (info.available) {
       const ok = loadSource(info.url, {
         source: info.source,
         fileName: info.fileName,
-        sizeLabel: info.sizeLabel
+        sizeLabel: info.sizeLabel,
+        player: info.player
       });
       if (status) {
         status.innerHTML = '';
-        status.appendChild(el('i', { class: 'dot dot-ok' }));
-        status.appendChild(el('span', { text: `${info.fileName}${info.sizeLabel ? ' · ' + info.sizeLabel : ''} ready` }));
+        status.appendChild(el('i', { class: info.isPlaceholder ? 'dot dot-warn' : 'dot dot-ok' }));
+        status.appendChild(el('span', {
+          text: info.isPlaceholder
+            ? `Placeholder reel${info.sizeLabel ? ' · ' + info.sizeLabel : ''} — drop ${info.expectedName} to swap`
+            : `${info.fileName}${info.sizeLabel ? ' · ' + info.sizeLabel : ''} ready`
+        }));
       }
-      if (!silent) toast(`Streaming <b>${info.fileName}</b>${info.sizeLabel ? ' · ' + info.sizeLabel : ''}`);
+      if (!silent) {
+        toast(info.isPlaceholder
+          ? `Playing the generated <b>placeholder reel</b> — drop <b>${info.expectedName}</b> to swap it in`
+          : `Streaming <b>${info.fileName}</b>${info.sizeLabel ? ' · ' + info.sizeLabel : ''}`,
+          info.isPlaceholder ? 'warn' : '', info.isPlaceholder ? 6500 : 4200);
+      }
       return info;
     }
     showLocker();
@@ -176,7 +218,7 @@ async function checkVideoInfo({ silent = false } = {}) {
       status.appendChild(el('i', { class: 'dot dot-warn' }));
       status.appendChild(el('span', { text: 'Server metadata unavailable' }));
     }
-    if (!silent) toast('Could not read <b>/api/video-info</b> — is the Node server running?', 'warn', 6000);
+    if (!silent) toast('Could not read <b>' + SHOW.videoApi + '</b> — is the Node server running?', 'warn', 6000);
     return null;
   }
 }
@@ -453,7 +495,7 @@ function buildChapterTicks() {
   });
 }
 
-function renderChapters(chapters, isPlaceholder, note) {
+function renderChapters(chapters, isPlaceholder, note, forReel) {
   state.chapters = chapters;
   const list = $('#chapterList');
   list.innerHTML = '';
@@ -484,8 +526,14 @@ function renderChapters(chapters, isPlaceholder, note) {
   });
   $('#chapterCount').textContent = `${chapters.length} marker${chapters.length === 1 ? '' : 's'}`;
   const noteEl = $('#railNote');
-  noteEl.hidden = !isPlaceholder;
-  if (isPlaceholder && note) noteEl.querySelector('span').textContent = note.replace(/^_note:\s*/, '');
+  const showNote = Boolean(isPlaceholder || forReel);
+  noteEl.hidden = !showNote;
+  if (showNote) {
+    const msg = forReel
+      ? 'These markers match the generated placeholder reel exactly. They will need replacing along with the video.'
+      : (note || '').replace(/^_note:\s*/, '');
+    noteEl.querySelector('span').textContent = msg;
+  }
   state.runtime = chapters.length ? Math.max(...chapters.map((c) => c.end)) : 2520;
   $('#tDur').textContent = fmtTime(state.runtime);
 }
@@ -575,15 +623,17 @@ function renderEpisode(data) {
 
   // Stats
   const stats = [
-    ['Season / Episode', `S${ep.seasonNumber} · E${ep.episodeNumber}`],
-    ['Series episode', `#${ep.seriesNumber}`],
-    ['Original air date', `${ep.airDay || ''} ${fmtDate(ep.airDate)}`.trim()],
-    ['Time slot', (ep.timeSlot || '8/7c').toUpperCase()],
-    ['Runtime', `${ep.runtimeMinutes} min`],
-    ['US viewers', `${ep.usViewersMillions}M`],
+    ['Season / Episode', ep.episodeNumber ? `S${ep.seasonNumber} · E${ep.episodeNumber}` : `Season ${ep.seasonNumber}${ep.seasonHalf ? ' (' + ep.seasonHalf + ')' : ''}`],
+    ['Series episode', ep.seriesNumber ? `#${ep.seriesNumber}` : null],
+    ['Original air date', ep.reunionAirDate ? `${ep.airDay || ''} ${fmtDate(ep.reunionAirDate)}`.trim()
+                        : (ep.airDate ? `${ep.airDay || ''} ${fmtDate(ep.airDate)}`.trim() : null)],
+    ['Time slot', ep.timeSlot || null],
+    ['Runtime', ep.runtimeMinutes ? `${ep.runtimeMinutes} min` : (ep.runtimeLabel ? `${ep.runtimeLabel} min` : null)],
+    ['US viewers', ep.usViewersMillions ? `${ep.usViewersMillions}M` : null],
+    ['Host', ep.host || null],
     ['Network', show.network || 'VH1'],
     ['Rating', ep.contentRating || 'TV-14']
-  ];
+  ].filter(([, v]) => v !== null && v !== undefined && v !== '');
   const grid = $('#statGrid');
   grid.innerHTML = '';
   stats.forEach(([k, v]) => grid.appendChild(el('div', {}, [
@@ -646,12 +696,13 @@ function renderEpisode(data) {
     gridC.innerHTML = '';
     (data.cast || []).filter((c) => filter === 'all' || c.role === filter).forEach((c) => {
       const roleLabel = ({ host: 'Host', main: 'Cast', guest: 'Guest', specialist: 'Specialist', archive: 'Archive footage' })[c.role] || c.role;
-      gridC.appendChild(el('li', { class: `cast-card role-${c.role}` }, [
+      gridC.appendChild(el('li', { class: `cast-card role-${c.role}${c.pending ? ' pending' : ''}` }, [
         el('span', { class: 'avatar', text: c.initials || c.name.split(/\s+/).map((w) => w[0]).join('').slice(0, 2), 'aria-hidden': 'true' }),
         el('span', { class: 'cast-meta' }, [
           el('strong', { text: c.name }),
           el('span', { text: c.credit }),
-          el('span', { class: 'role-badge', text: roleLabel })
+          el('span', { class: 'role-badge', text: roleLabel }),
+          c.pending ? el('span', { class: 'pending-tag', text: 'unconfirmed' }) : null
         ])
       ]));
     });
@@ -693,10 +744,53 @@ function renderEpisode(data) {
   (media.supportedFormats || ['MP4', 'M4V', 'MKV', 'AVI', 'MOV']).forEach((f) => formats.appendChild(el('li', { text: f })));
 
   // Chapters
-  renderChapters(data.chapters || [], data.chaptersArePlaceholder, data.chaptersNote);
+  renderChapters(data.chapters || [], data.chaptersArePlaceholder, data.chaptersNote, data.chaptersForPlaceholderReel);
+
+  // Verification checklist (shows whose source material still needs confirming)
+  const verifyHost = $('#verifyList');
+  if (verifyHost && (data.pendingVerification || []).length) {
+    verifyHost.innerHTML = '';
+    data.pendingVerification.forEach((item) => {
+      const done = /\b(whom|confirmed)\b/i.test(item) && false;   // resolved items are removed from the JSON, not flagged here
+      verifyHost.appendChild(el('li', { class: done ? 'done' : '' }, item));
+    });
+  } else if (verifyHost) {
+    const card = verifyHost.closest('.card');
+    if (card) card.style.display = 'none';
+  }
+
+  // Season context strip (optional)
+  const ctxHost = $('#seasonContext');
+  if (ctxHost && data.seasonContext) {
+    const sc = data.seasonContext;
+    const blocks = [];
+    if (sc.elevenA) blocks.push(['Season 11A', `${fmtDate(sc.elevenA.premiere)} – ${fmtDate(sc.elevenA.reunion)}`, `Reunion hosted by ${sc.elevenA.reunionHost}`]);
+    if (sc.elevenB) blocks.push(['Season 11B', `${fmtDate(sc.elevenB.premiere)} – ${fmtDate(sc.elevenB.reunion)}`, `${sc.elevenB.reunionTitle || 'Reunion'} · hosted by ${sc.elevenB.reunionHost}`]);
+    if (sc.nextSeason && sc.nextSeason.note) blocks.push(['Next on VH1', 'Season 12', sc.nextSeason.note]);
+    ctxHost.innerHTML = '';
+    blocks.forEach(([label, big, small]) => ctxHost.appendChild(el('div', { class: 'ctx' }, [
+      el('h4', { text: label }), el('strong', { text: big }), el('span', { text: small })
+    ])));
+  }
+
+  // Hero micro-copy from data, when the page opts in
+  const heroDate = $('#heroDate');
+  if (heroDate && (ep.reunionAirDate || ep.airDate)) {
+    heroDate.textContent = `${ep.reunionTitle || ep.title || 'Reunion'} · ${fmtDate(ep.reunionAirDate || ep.airDate)}`;
+  }
+  const heroRuntime = $('#heroRuntime');
+  if (heroRuntime && (ep.runtimeLabel || ep.runtimeMinutes)) {
+    heroRuntime.textContent = `${ep.runtimeLabel || ep.runtimeMinutes + ' min'} ${ep.type === 'sneak-peek' ? 'preview' : ''}`.trim();
+  }
+  const heroHost = $('#heroHost');
+  if (heroHost && ep.host) heroHost.textContent = ep.host;
 
   // Title / meta from data
-  if (ep.title) document.title = `${ep.title} — ${show.shortTitle || 'Love & Hip Hop: New York'} S${ep.seasonNumber} E${ep.episodeNumber} | Watch`;
+  if (ep.title) {
+    const parts = [ep.title, show.shortTitle || SHOW.showName];
+    if (ep.seasonNumber) parts.push(`S${ep.seasonNumber}${ep.episodeNumber ? ' E' + ep.episodeNumber : ''}`);
+    document.title = `${parts.join(' — ')} | Watch`;
+  }
 }
 
 /* ------------------------------------------------------------------ *
@@ -734,7 +828,7 @@ async function boot() {
   initNav();
   syncVolUI();
   try {
-    const res = await fetch('/api/episode', { cache: 'no-store' });
+    const res = await fetch(SHOW.episodeApi, { cache: 'no-store' });
     const data = await res.json();
     renderEpisode(data);
     buildChapterTicks();

@@ -1,0 +1,21 @@
+{
+  "name": "love-and-hip-hop-ny-s3-reunion-part-2",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Watch page, streaming server, metadata and tooling for Love & Hip Hop: New York — Season 3, Episode 14: Reunion: Part 2 (VH1, April 15, 2013).",
+  "keywords": ["love-and-hip-hop", "vh1", "reunion", "season-3", "video-player", "watch-page"],
+  "license": "SEE LICENSE IN README.md",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "node server/server.js",
+    "serve": "node server/server.js",
+    "check": "node server/check.js",
+    "info": "python3 scripts/metadata-parser.py YouTube.mp4",
+    "convert": "bash scripts/video-converter.sh YouTube.mp4 YouTube.m4v"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

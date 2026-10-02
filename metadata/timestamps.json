@@ -1,0 +1,19 @@
+{
+  "_note": "STRUCTURAL MARKER TEMPLATE. The chapter names below follow the standard two-part reunion-special rundown (cold open -> host welcome -> topic blocks -> final segment). The 'start' values are placeholders on a 42-minute (2520s) runtime and are NOT verified timecodes from the episode. Replace them with real timecodes pulled from your YouTube.mp4, then the player's chapter rail, progress markers and deep links (index.html?t=...&chapter=...) will line up exactly.",
+  "_placeholder": true,
+  "runtimeSeconds": 2520,
+  "runtimeLabel": "42:00",
+  "chapters": [
+    { "id": "cold-open", "title": "Cold Open", "start": 0, "end": 45, "blurb": "Previously on the reunion — the biggest moments from Part 1 roll back.", "tag": "Intro" },
+    { "id": "host-welcome", "title": "Welcome Back", "start": 45, "end": 210, "blurb": "Mona Scott-Young welcomes the cast back to the diamond wall and sets the rules for Part 2.", "tag": "Host" },
+    { "id": "receipts", "title": "Receipts On The Table", "start": 210, "end": 480, "blurb": "The first topic block — the season's unanswered accusations get revisited, on the record.", "tag": "Confrontation" },
+    { "id": "love-triangle", "title": "The Love Triangle", "start": 480, "end": 810, "blurb": "The season's central love triangle takes the hot seat, with both sides in the same room.", "tag": "Relationships" },
+    { "id": "men-of-the-season", "title": "The Men Of The Season", "start": 810, "end": 1080, "blurb": "The men step out from the sidelines and answer for their part in the season's fallout.", "tag": "Guest Panel" },
+    { "id": "unseen-footage", "title": "Unseen Footage", "start": 1080, "end": 1290, "blurb": "Never-before-aired clips from the season are screened for the first time.", "tag": "Exclusive" },
+    { "id": "new-business", "title": "New Business", "start": 1290, "end": 1500, "blurb": "Business moves, new deals and what the cast has been building since cameras stopped.", "tag": "Music & Business" },
+    { "id": "the-question", "title": "The Question", "start": 1500, "end": 1770, "blurb": "One direct question, no dodging — the moment the studio audience goes quiet.", "tag": "Reveal" },
+    { "id": "walk-off", "title": "Walk-Off", "start": 1770, "end": 2010, "blurb": "A walk-off tests how much of this cast is actually willing to be in the same room.", "tag": "Fallout" },
+    { "id": "final-block", "title": "Final Block", "start": 2010, "end": 2280, "blurb": "Closing statements as each cast member gets the last word before the season is sealed.", "tag": "Closing" },
+    { "id": "end-credits", "title": "End Credits", "start": 2280, "end": 2520, "blurb": "Credits, next on VH1 and the final moments of the Season 3 run.", "tag": "Outro" }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "video": "love-and-hip-hop-new-york-season-3-the-reunion-part-2.mp4",
+  "description": "Chapter map of the fan-made sneak-peek promo reel (15.015 s, 450 frames @ 30000/1001 fps)",
+  "frame_rate": "30000/1001",
+  "total_frames": 450,
+  "total_duration_seconds": 15.015,
+  "chapters": [
+    {
+      "index": 1,
+      "id": "title-card",
+      "title": "Title Card",
+      "start_seconds": 0.0,
+      "end_seconds": 3.003,
+      "start_frame": 0,
+      "end_frame": 89,
+      "start_timecode": "00:00:00.000",
+      "end_timecode": "00:00:03.003",
+      "content": "Purple tufted-set backdrop, gold rules, 'VH1 presents / Love & Hip Hop New York / Season 3 - The Reunion Part 2'. Slow push-in, fade from black.",
+      "source_plate": "build/card_title.png"
+    },
+    {
+      "index": 2,
+      "id": "sneak-peek-a",
+      "title": "Sneak Peek A - The Ladies Sound Off",
+      "start_seconds": 3.003,
+      "end_seconds": 7.5075,
+      "start_frame": 90,
+      "end_frame": 224,
+      "start_timecode": "00:00:03.003",
+      "end_timecode": "00:00:07.507",
+      "content": "Framed roundtable still (remastered screenshot) with gold border, push-in 1.00x-1.10x, lower third: 'SNEAK PEEK / THE LADIES SOUND OFF'.",
+      "source_plate": "build/card_peek_a.png"
+    },
+    {
+      "index": 3,
+      "id": "sneak-peek-b",
+      "title": "Sneak Peek B - Every Beef. Every Betrayal.",
+      "start_seconds": 7.5075,
+      "end_seconds": 12.012,
+      "start_frame": 225,
+      "end_frame": 359,
+      "start_timecode": "00:00:07.507",
+      "end_timecode": "00:00:12.012",
+      "content": "Tighter crop of the roundtable still, push-out 1.10x-1.00x, lower third: 'REUNION - PART 2 / EVERY BEEF. EVERY BETRAYAL. / Mon + 8/7c on VH1'.",
+      "source_plate": "build/card_peek_b.png"
+    },
+    {
+      "index": 4,
+      "id": "end-card",
+      "title": "End Card - Mon + 8/7c on VH1",
+      "start_seconds": 12.012,
+      "end_seconds": 15.015,
+      "start_frame": 360,
+      "end_frame": 449,
+      "start_timecode": "00:00:12.012",
+      "end_timecode": "00:00:15.015",
+      "content": "Broadcast end card: 'ALL NEW / Love & Hip Hop: The Reunion Part 2 / MON + 8/7C - VH1 / Season 3 - Episode 14'. Gentle push-in, fade to black.",
+      "source_plate": "build/card_end.png"
+    }
+  ],
+  "audio": {
+    "bed": "Synthesized promo pad (A-major voicing, 0.5 Hz tremolo), fade-in 1.0 s, fade-out 1.6 s",
+    "codec": "AAC",
+    "bitrate_kbps": 128,
+    "sample_rate_hz": 48000,
+    "channels": 2
+  },
+  "generated_by": "scripts/build-promo-video.sh",
+  "last_updated": "2026-10-02"
+}

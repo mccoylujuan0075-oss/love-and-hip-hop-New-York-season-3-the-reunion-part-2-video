@@ -1,0 +1,95 @@
+{
+  "show": {
+    "title": "Love & Hip Hop: New York",
+    "alt_title": "Love and Hip Hop New York",
+    "network": "VH1",
+    "timeslot": "Mondays 8/7c",
+    "created_by": "Mona Scott-Young",
+    "production_companies": [
+      "Monami Entertainment",
+      "Interloc Films",
+      "NFGTV"
+    ]
+  },
+  "season": {
+    "number": 3,
+    "episode_count": 14,
+    "first_aired": "2013-01-07",
+    "last_aired": "2013-04-15",
+    "host_of_reunion": "Mona Scott-Young",
+    "executives": {
+      "monami": ["Mona Scott-Young"],
+      "nfgtv": ["Toby Barraud", "Stefan Springman"],
+      "vh1": ["Shelly Tatro", "Brad Abramson", "Danielle Gelfand", "Jeff Olde"]
+    }
+  },
+  "episode": {
+    "season_episode": 14,
+    "series_episode": 34,
+    "title": "Reunion - Part 2",
+    "alt_titles": ["The Reunion Part 2", "Reunion: Part 2"],
+    "air_date": "2013-04-15",
+    "air_day": "Monday",
+    "air_time": "8/7c",
+    "runtime_minutes": 42,
+    "rating": "TV-14",
+    "us_viewers_millions": 2.35,
+    "writer": "Ruth Sinanian",
+    "logline": "The drama unfolds as the ladies of Love & Hip Hop NY reunite to get into all the issues, the beef, and the madness that occurred during and after the cameras rolled.",
+    "imdb_id": "tt2817076",
+    "preceded_by": {
+      "season_episode": 13,
+      "title": "Reunion - Part 1",
+      "air_date": "2013-04-08"
+    }
+  },
+  "cast": {
+    "host": ["Mona Scott-Young"],
+    "dj": ["Funkmaster Flex"],
+    "main": [
+      "Yandy Smith",
+      "Erica Mena",
+      "Jen 'the Pen' Bayer",
+      "Raqi Thunda",
+      "Winter Ramos",
+      "Rashidah Ali",
+      "Tahiry Jose",
+      "Joe Budden",
+      "Consequence",
+      "Rich Dollaz"
+    ],
+    "reunion_guests": [
+      "Olivia Longott",
+      "Lore'l",
+      "Mendeecees Harris (archive footage)",
+      "Lisa Ribacoff (certified polygraph examiner)"
+    ],
+    "still_photograph_only": ["Somaya Reece"]
+  },
+  "video": {
+    "promo_file": "love-and-hip-hop-new-york-season-3-the-reunion-part-2.mp4",
+    "nature": "Fan-made 15s sneak-peek style promo reel built from repository assets (not episode footage)",
+    "container": "MP4",
+    "supported_containers": ["MP4", "M4V", "MKV", "AVI", "MOV"],
+    "resolution": "1920x1080",
+    "frame_rate": "30000/1001",
+    "frame_rate_label": "29.97 fps",
+    "video_codec": "H.264 (libx264, High profile)",
+    "audio_codec": "AAC, 128 kbps, 48 kHz stereo",
+    "duration_seconds": 15.015,
+    "chapters_file": "metadata/timestamps.json"
+  },
+  "assets": {
+    "source_still": "screenshot16_9.jpg",
+    "remastered_still": "assets/source/screenshot-remastered-1920.jpg",
+    "thumbnails": "assets/thumbnails/",
+    "posters": "assets/posters/"
+  },
+  "sources": [
+    "https://love-hip-hop.fandom.com/wiki/Love_%26_Hip_Hop:_New_York_(Season_3)",
+    "https://www.imdb.com/title/tt2817076/",
+    "VH1 promotional tagline: 'All new Love and Hip Hop: The Reunion Part 2 Mon + 8/7C on VH1'"
+  ],
+  "license_note": "Fan-maintained informational repository. All content rights belong to VH1, Monami Entertainment, NFGTV and their respective owners.",
+  "last_updated": "2026-10-02"
+}

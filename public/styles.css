@@ -774,3 +774,25 @@ kbd {
   .skip-flash { width: 74px; height: 74px; }
   .toast { font-size: 12.5px; padding: 10px 16px; }
 }
+
+/* ======================== LOAD THE MP4 ======================== */
+
+.load-section { padding: clamp(40px, 5vw, 70px) 0; background: linear-gradient(180deg, transparent, rgba(240,199,94,.05) 50%, transparent); }
+.load-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.load-card {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: var(--panel); border: 1px solid var(--panel-line);
+  border-radius: 14px; padding: 18px 20px; backdrop-filter: blur(10px);
+  transition: .25s var(--ease);
+}
+.load-card:hover { transform: translateY(-3px); border-color: rgba(240,199,94,.42); box-shadow: 0 18px 40px -22px rgba(124,58,237,.9); }
+.load-num {
+  flex: 0 0 auto; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  background: linear-gradient(140deg, var(--gold-1), var(--gold-3)); color: #25150a;
+  font: 800 13px/1 ui-monospace, monospace;
+}
+.load-body { display: grid; gap: 6px; min-width: 0; }
+.load-body strong { font-size: 14.5px; color: #fff; line-height: 1.35; }
+.load-body span { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+.load-body code { color: var(--gold-2); font-size: 12px; word-break: break-all; }
+.load-note { margin: 18px 0 0; font-size: 12.5px; color: var(--muted-2); max-width: 80ch; line-height: 1.6; }

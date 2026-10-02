@@ -96,10 +96,12 @@ function checkJSON(rel) {
 
 /* ------------------------------------------------------------------ */
 
-console.log('');
-console.log(`${C.b}${C.gd}Love & Hip Hop: New York · S3 E14 · Reunion: Part 2${C.o}`);
-console.log(`${C.d}repository readiness check — server/check.js${C.o}`);
-console.log('─'.repeat(70));
+if (!AS_JSON) {
+  console.log('');
+  console.log(`${C.b}${C.gd}Watch pages · repository readiness check${C.o}`);
+  console.log(`${C.d}server/check.js — Love & Hip Hop: New York (S3 Sneak Peek + Reunion Part 2) · Basketball Wives${C.o}`);
+  console.log('─'.repeat(70));
+}
 
 section('Layout');
 checkDir('docs');
@@ -121,6 +123,8 @@ const episodeData = checkJSON('metadata/episode-data.json');
 checkJSON('metadata/timestamps.json');
 const bwData = checkJSON('metadata/basketball-wives-data.json');
 checkJSON('metadata/basketball-wives-timestamps.json');
+const peekData = checkJSON('metadata/sneak-peek-data.json');
+checkJSON('metadata/sneak-peek-timestamps.json');
 
 section('Watch page');
 checkFile('public/index.html');
@@ -129,6 +133,13 @@ checkFile('public/app.js');
 checkFile('public/assets/img/favicon.svg', { required: false });
 checkFile('public/assets/posters/reunion-part-2-poster.jpg', { required: false });
 checkFile('public/assets/thumbnails/reunion-part-2-16x9.jpg', { required: false });
+
+section('Watch page — Season 3 Sneak Peek (landing)');
+checkFile('public/index.html');
+checkFile('public/assets/posters/sneak-peek-poster.jpg', { required: false });
+
+section('Watch page — Reunion Part 2');
+checkFile('public/reunion.html');
 
 section('Watch page — Basketball Wives');
 checkFile('public/basketball-wives.html');
@@ -148,18 +159,26 @@ checkFile('.gitignore', { required: false });
 /* ------------------------------------------------------------------ */
 
 section('Episode media');
-const videoPath = findVideo();
-let videoInfo = null;
-if (videoPath) {
-  const st = fs.statSync(videoPath);
-  const rel = path.relative(ROOT, videoPath);
-  const mb = st.size / 1024 / 1024;
-  videoInfo = { path: rel, bytes: st.size, mtime: st.mtime.toISOString() };
-  record(rel === PRIMARY ? 'ok' : 'warn', rel,
-    `${mb.toFixed(1)} MB · modified ${st.mtime.toISOString().slice(0, 16).replace('T', ' ')}` +
-    (rel === PRIMARY ? '' : ` — expected the file to be named ${PRIMARY}`));
+// Landing page: the Season 3 sneak peek (owns YouTube.mp4)
+const PEEK_NAMES = ['YouTube.mp4', 'Love and Hip Hop Season 3 Sneak Peek.mp4', 'Love & Hip Hop Special.mp4'];
+let peekReal = null;
+for (const name of PEEK_NAMES) {
+  for (const dir of ['', 'media', 'assets/videos']) {
+    const p = path.join(ROOT, dir, name);
+    if (fs.existsSync(p) && fs.statSync(p).isFile() && fs.statSync(p).size > 0) { peekReal = p; break; }
+  }
+  if (peekReal) break;
+}
+const peekReel = path.join(ROOT, 'media/placeholder/lhhny-season-3-sneak-peek-reel.mp4');
+if (peekReal) {
+  const st = fs.statSync(peekReal);
+  record('ok', path.relative(ROOT, peekReal), `${(st.size / 1024 / 1024).toFixed(1)} MB · real clip in place`);
+} else if (fs.existsSync(peekReel) && fs.statSync(peekReel).size > 0) {
+  const st = fs.statSync(peekReel);
+  record('warn', 'media/placeholder/lhhny-season-3-sneak-peek-reel.mp4',
+    `${(st.size / 1024 / 1024).toFixed(1)} MB placeholder — drop YouTube.mp4 to swap`);
 } else {
-  record('warn', PRIMARY, 'not in the repo yet — the L&HH page runs and shows the add-your-file locker');
+  record('warn', 'YouTube.mp4', 'no clip and no placeholder reel — run: npm run peek:reel');
 }
 
 const BW_NAMES = [
@@ -209,11 +228,11 @@ if (!AS_JSON) {
               ` · ${C.y}${warns.length} warning${warns.length === 1 ? '' : 's'}${C.o}` +
               ` · ${C.r}${fails.length} failed${C.o}`);
 
-  if (videoInfo) {
-    console.log(`\n  ${C.b}Media ready${C.o} — ${videoInfo.path} (${(videoInfo.bytes / 1024 / 1024).toFixed(1)} MB)`);
+  if (peekReal) {
+    console.log(`\n  ${C.b}Media ready${C.o} — ${path.relative(ROOT, peekReal)} (${(fs.statSync(peekReal).size / 1024 / 1024).toFixed(1)} MB)`);
   } else {
-    console.log(`\n  ${C.b}${C.y}Next step:${C.o} copy the episode to ${C.b}${path.join(ROOT, PRIMARY)}${C.o}`);
-    console.log(`  ${C.d}Any of these also work: assets/videos/${PRIMARY}, assets/${PRIMARY}, media/${PRIMARY}`);
+    console.log(`\n  ${C.b}${C.y}Next step:${C.o} copy the sneak-peek clip to ${C.b}${path.join(ROOT, PRIMARY)}${C.o}`);
+    console.log(`  ${C.d}They also play from media/, assets/videos/ or assets/ with the same name.${C.o}`);
     console.log(`  Or stream from elsewhere:  VIDEO_URL=https://…/${PRIMARY} npm start${C.o}`);
   }
 
@@ -221,6 +240,10 @@ if (!AS_JSON) {
   if (episodeData && episodeData.episode) {
     const e = episodeData.episode;
     console.log(`  ${C.d}${episodeData.show.title} — S${e.seasonNumber} E${e.episodeNumber} "${e.title}" · ${e.airDate} · ${episodeData.show.network}${C.o}`);
+  }
+  if (peekData && peekData.episode) {
+    const e = peekData.episode;
+    console.log(`  ${C.d}${peekData.show.title} — ${e.title} · aired ${e.airDate} · ${peekData.show.network}${C.o}`);
   }
   if (bwData && bwData.episode) {
     const e = bwData.episode;
@@ -233,7 +256,7 @@ if (AS_JSON) {
   console.log(JSON.stringify({
     ok: results.every((r) => r.level !== 'fail' || r.level === 'fixed'),
     root: ROOT,
-    video: videoInfo,
+    video: peekReal ? { path: path.relative(ROOT, peekReal), bytes: fs.statSync(peekReal).size } : null,
     results
   }, null, 2));
 }

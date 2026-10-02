@@ -17,12 +17,23 @@
  * The page declares which show it is with <html data-show="…">.
  * ------------------------------------------------------------------ */
 const SHOWS = {
-  lhhny: {
-    key: 'lhhny',
+  // Landing page: the Season 3 sneak peek special. Owns YouTube.mp4.
+  peek: {
+    key: 'peek',
     primaryName: 'YouTube.mp4',
-    storeKey: 'lhhny.s3e14.position',
+    storeKey: 'lhhny.s3peek.position',
     episodeApi: '/api/episode',
     videoApi: '/api/video-info',
+    showName: 'Love & Hip Hop: New York',
+    episodeLabel: 'S3 Special · VH1'
+  },
+  // Secondary page: the Reunion, Part 2.
+  reunion: {
+    key: 'reunion',
+    primaryName: 'Love & Hip Hop Reunion Part 2.mp4',
+    storeKey: 'lhhny.s3e14.position',
+    episodeApi: '/api/reunion-episode',
+    videoApi: '/api/reunion-video-info',
     showName: 'Love & Hip Hop: New York',
     episodeLabel: 'S3 E14 · VH1'
   },
@@ -36,7 +47,7 @@ const SHOWS = {
     episodeLabel: 'Reunion Sneak Peek · VH1'
   }
 };
-const SHOW = SHOWS[document.documentElement.dataset.show] || SHOWS.lhhny;
+const SHOW = SHOWS[document.documentElement.dataset.show] || SHOWS.peek;
 const PRIMARY_NAME = SHOW.primaryName;
 const STORE_KEY = SHOW.storeKey;
 const SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
@@ -759,14 +770,46 @@ function renderEpisode(data) {
     if (card) card.style.display = 'none';
   }
 
+  // "Load the real mp4" instructions (optional)
+  const loadList = $('#loadList');
+  const howTo = (data.media && data.media.howTo) || data.howToGetTheRealFile;
+  if (loadList && Array.isArray(howTo)) {
+    loadList.innerHTML = '';
+    howTo.forEach((item, i) => {
+      const [head, ...rest] = String(item).split(' — ');
+      loadList.appendChild(el('li', { class: 'load-card' }, [
+        el('span', { class: 'load-num', text: String(i + 1) }),
+        el('span', { class: 'load-body' }, [
+          el('strong', { text: head }),
+          rest.length ? el('span', { text: rest.join(' — ') }) : null
+        ])
+      ]));
+    });
+  } else if (loadList) {
+    loadList.closest('section').style.display = 'none';
+  }
+
+  // Poster caption + hero copy overrides from metadata
+  const caption = $('#posterCaption');
+  const ph = data.media && data.media.placeholder;
+  if (caption && ph && ph.isPlaceholder) {
+    caption.textContent = ph.note || caption.textContent;
+  }
+  const why = $('#whyItMatters');
+  if (why && ep.whyItMatters) why.textContent = ep.whyItMatters;
+
   // Season context strip (optional)
   const ctxHost = $('#seasonContext');
   if (ctxHost && data.seasonContext) {
     const sc = data.seasonContext;
     const blocks = [];
-    if (sc.elevenA) blocks.push(['Season 11A', `${fmtDate(sc.elevenA.premiere)} – ${fmtDate(sc.elevenA.reunion)}`, `Reunion hosted by ${sc.elevenA.reunionHost}`]);
-    if (sc.elevenB) blocks.push(['Season 11B', `${fmtDate(sc.elevenB.premiere)} – ${fmtDate(sc.elevenB.reunion)}`, `${sc.elevenB.reunionTitle || 'Reunion'} · hosted by ${sc.elevenB.reunionHost}`]);
-    if (sc.nextSeason && sc.nextSeason.note) blocks.push(['Next on VH1', 'Season 12', sc.nextSeason.note]);
+    const push = (label, big, small) => { if (small || big) blocks.push([label, big, small]); };
+    if (sc.elevenA) push('Season 11A', `${fmtDate(sc.elevenA.premiere)} – ${fmtDate(sc.elevenA.reunion)}`, `Reunion hosted by ${sc.elevenA.reunionHost}`);
+    if (sc.elevenB) push('Season 11B', `${fmtDate(sc.elevenB.premiere)} – ${fmtDate(sc.elevenB.reunion)}`, `${sc.elevenB.reunionTitle || 'Reunion'} · hosted by ${sc.elevenB.reunionHost}`);
+    if (sc.nextSeason && sc.nextSeason.note) push('Next on VH1', 'Season 12', sc.nextSeason.note);
+    if (sc.announcement) push('Season announced', fmtDate(sc.announcement.date) || '—', sc.announcement.note);
+    if (sc.castRebuild) push('The cast rebuild', sc.seasonLabel || 'Season 3', sc.castRebuild.note);
+    if (Array.isArray(sc.promos)) push('Trailers', `${sc.promos.length} released`, sc.promos.map((p) => `${p.title} (${p.length}, ${fmtDate(p.released)})`).join(' · '));
     ctxHost.innerHTML = '';
     blocks.forEach(([label, big, small]) => ctxHost.appendChild(el('div', { class: 'ctx' }, [
       el('h4', { text: label }), el('strong', { text: big }), el('span', { text: small })
@@ -776,19 +819,21 @@ function renderEpisode(data) {
   // Hero micro-copy from data, when the page opts in
   const heroDate = $('#heroDate');
   if (heroDate && (ep.reunionAirDate || ep.airDate)) {
-    heroDate.textContent = `${ep.reunionTitle || ep.title || 'Reunion'} · ${fmtDate(ep.reunionAirDate || ep.airDate)}`;
+    const what = ep.reunionTitle || ep.shortTitle || ep.title || 'Episode';
+    heroDate.textContent = `${what} · ${fmtDate(ep.reunionAirDate || ep.airDate)}`;
   }
   const heroRuntime = $('#heroRuntime');
   if (heroRuntime && (ep.runtimeLabel || ep.runtimeMinutes)) {
-    heroRuntime.textContent = `${ep.runtimeLabel || ep.runtimeMinutes + ' min'} ${ep.type === 'sneak-peek' ? 'preview' : ''}`.trim();
+    heroRuntime.textContent = ep.runtimeLabel || `${ep.runtimeMinutes} min`;
   }
   const heroHost = $('#heroHost');
   if (heroHost && ep.host) heroHost.textContent = ep.host;
 
   // Title / meta from data
   if (ep.title) {
-    const parts = [ep.title, show.shortTitle || SHOW.showName];
-    if (ep.seasonNumber) parts.push(`S${ep.seasonNumber}${ep.episodeNumber ? ' E' + ep.episodeNumber : ''}`);
+    const label = ep.shortTitle || ep.title;
+    const parts = [label, show.shortTitle || SHOW.showName];
+    if (ep.seasonNumber) parts.push(`S${ep.seasonNumber}${ep.episodeNumber ? ' E' + ep.episodeNumber : ' Special'}`);
     document.title = `${parts.join(' — ')} | Watch`;
   }
 }

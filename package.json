@@ -2,7 +2,7 @@
   "name": "love-and-hip-hop-ny-s3-reunion-part-2",
   "version": "1.0.0",
   "private": true,
-  "description": "Watch pages, streaming server, metadata and tooling for Love & Hip Hop: New York S3E14 (Reunion: Part 2) and the Basketball Wives Reunion Sneak Peek.",
+  "description": "Watch pages, streaming server, metadata and tooling for Love & Hip Hop: New York (S3 Sneak Peek + Reunion Part 2) and the Basketball Wives Reunion Sneak Peek.",
   "keywords": [
     "love-and-hip-hop",
     "vh1",
@@ -24,7 +24,9 @@
     "convert": "bash scripts/video-converter.sh YouTube.mp4 YouTube.m4v",
     "reel": "bash scripts/make-placeholder-reel.sh --show \"Basketball Wives\" --subtitle \"The Reunion \u00b7 Sneak Peek\" --out media/placeholder/basketball-wives-reunion-reel.mp4 --poster public/assets/posters/basketball-wives-reunion-poster.jpg --chapters metadata/basketball-wives-timestamps.json --duration 151",
     "bw:reel": "npm run reel",
-    "bw:info": "python3 scripts/metadata-parser.py media/placeholder/basketball-wives-reunion-reel.mp4"
+    "bw:info": "python3 scripts/metadata-parser.py media/placeholder/basketball-wives-reunion-reel.mp4",
+    "peek:reel": "bash scripts/make-placeholder-reel.sh --show \"Love & Hip Hop: New York\" --subtitle \"Season 3 Sneak Peek\" --out media/placeholder/lhhny-season-3-sneak-peek-reel.mp4 --poster public/assets/posters/sneak-peek-poster.jpg --chapters metadata/sneak-peek-timestamps.json --duration 151",
+    "peek:info": "python3 scripts/metadata-parser.py media/placeholder/lhhny-season-3-sneak-peek-reel.mp4"
   },
   "dependencies": {},
   "devDependencies": {}

@@ -40,17 +40,42 @@ const SEARCH_DIRS = ['', 'assets/videos', 'assets', 'media', 'video', 'public', 
  * reel so its page still demonstrates the whole player pipeline.
  * ------------------------------------------------------------------ */
 const SHOWS = {
-  lhhny: {
-    key: 'lhhny',
-    label: 'Love & Hip Hop: New York',
+  // Landing page: the Season 3 sneak peek ("Love & Hip Hop Special", Dec 1 2012).
+  // It owns YouTube.mp4 — that was the file this repository was originally built around.
+  peek: {
+    key: 'peek',
+    label: 'L&HH NY · S3 Sneak Peek',
     primaryName: 'YouTube.mp4',
-    names: ['YouTube.mp4'],
-    dirs: SEARCH_DIRS,
-    anyVideo: true,                 // fall back to any video in the search dirs
+    names: [
+      'YouTube.mp4',
+      'Love and Hip Hop Season 3 Sneak Peek.mp4',
+      'Love & Hip Hop Special.mp4',
+      'sneak-peek.mp4'
+    ],
+    dirs: ['', 'media', 'assets/videos', 'assets', 'video', 'public'],
+    anyVideo: false,
+    placeholder: 'media/placeholder/lhhny-season-3-sneak-peek-reel.mp4',
+    metadata: 'metadata/sneak-peek-data.json',
+    timestamps: 'metadata/sneak-peek-timestamps.json',
+    page: 'public/index.html',
+    url: '/media/peek/stream'
+  },
+  // Secondary page: the Reunion, Part 2 (the repo's original subject).
+  reunion: {
+    key: 'reunion',
+    label: 'L&HH NY · Reunion Part 2',
+    primaryName: 'Love & Hip Hop Reunion Part 2.mp4',
+    names: [
+      'Love & Hip Hop Reunion Part 2.mp4',
+      'Love and Hip Hop Reunion Part 2.mp4',
+      'Reunion Part 2.mp4'
+    ],
+    dirs: ['', 'media', 'assets/videos', 'assets', 'video'],
+    anyVideo: false,                // never steal another page's file
     metadata: 'metadata/episode-data.json',
     timestamps: 'metadata/timestamps.json',
-    page: 'public/index.html',
-    url: '/media/YouTube.mp4'
+    page: 'public/reunion.html',
+    url: '/media/reunion/stream'
   },
   bw: {
     key: 'bw',
@@ -72,7 +97,7 @@ const SHOWS = {
   }
 };
 
-const PRIMARY_NAME = SHOWS.lhhny.primaryName;   // legacy alias
+const PRIMARY_NAME = SHOWS.peek.primaryName;   // legacy alias (the sneak-peek page owns YouTube.mp4)
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -124,7 +149,7 @@ function statSafe(p) {
   try { return fs.statSync(p); } catch { return null; }
 }
 
-/** Locate a show's video file. Exact filenames win, then (for lhhny) any video. */
+/** Locate a show's video file. Exact filenames win, then (opt-in) any video. */
 function findShowVideo(showKey) {
   const show = typeof showKey === 'string' ? SHOWS[showKey] : showKey;
   if (!show) return null;
@@ -191,10 +216,10 @@ function findShowVideo(showKey) {
   return null;
 }
 
-function findVideo() { return findShowVideo('lhhny'); }
+function findVideo() { return findShowVideo('peek'); }
 
 function videoInfoFor(showKey) {
-  const show = SHOWS[showKey] || SHOWS.lhhny;
+  const show = SHOWS[showKey] || SHOWS.peek;
   const found = findShowVideo(show);
   const expected = show.primaryName;
 
@@ -245,15 +270,17 @@ function videoInfoFor(showKey) {
     sizeLabel: null,
     modified: null,
     rangeRequests: true,
-    expectedLocations: show.dirs.filter(Boolean).map((d) => `${d}/${expected}`).concat(`${expected} (repo root)`),
+    expectedLocations: show.names
+      .flatMap((n) => show.dirs.filter(Boolean).map((d) => `${d}/${n}`).concat(`${n} (repo root)`))
+      .slice(0, 8),
     hint: `Drop ${expected} in the repository root and reload — no restart needed. Or start the server with VIDEO_URL=https://... to stream from a CDN.`
   };
 }
 
-function videoInfo() { return videoInfoFor('lhhny'); }
+function videoInfo() { return videoInfoFor('peek'); }
 
 function episodePayload(showKey) {
-  const show = SHOWS[showKey] || SHOWS.lhhny;
+  const show = SHOWS[showKey] || SHOWS.peek;
   const data = readJSON(path.join(ROOT, show.metadata)) || {};
   const chapters = readJSON(path.join(ROOT, show.timestamps)) || {};
   return {
@@ -269,6 +296,7 @@ function episodePayload(showKey) {
     seasonContext: data.seasonContext || null,
     sources: data.sources || [],
     rights: data.rights || null,
+    howToGetTheRealFile: data.howToGetTheRealFile || [],
     pendingVerification: data._pendingVerification || [],
     pdfNote: data._pdfNote || null,
     chapters: chapters.chapters || [],
@@ -452,14 +480,26 @@ const server = http.createServer((req, res) => {
   }
 
   // ── episode metadata ───────────────────────────────────────────────
-  if (pathname === '/api/episode' || pathname === '/api/bw-episode') {
-    sendJSON(res, 200, episodePayload(pathname === '/api/bw-episode' ? 'bw' : 'lhhny'));
+  const EPISODE_ROUTES = {
+    '/api/episode': 'peek',                       // landing page: the S3 sneak peek
+    '/api/peek-episode': 'peek',
+    '/api/reunion-episode': 'reunion',
+    '/api/bw-episode': 'bw'
+  };
+  if (EPISODE_ROUTES[pathname]) {
+    sendJSON(res, 200, episodePayload(EPISODE_ROUTES[pathname]));
     return;
   }
 
   // ── video availability ─────────────────────────────────────────────
-  if (pathname === '/api/video-info' || pathname === '/api/bw-video-info') {
-    const key = pathname === '/api/bw-video-info' ? 'bw' : 'lhhny';
+  const VIDEO_ROUTES = {
+    '/api/video-info': 'peek',
+    '/api/peek-video-info': 'peek',
+    '/api/reunion-video-info': 'reunion',
+    '/api/bw-video-info': 'bw'
+  };
+  if (VIDEO_ROUTES[pathname]) {
+    const key = VIDEO_ROUTES[pathname];
     const show = SHOWS[key];
     const data = readJSON(path.join(ROOT, show.metadata)) || {};
     sendJSON(res, 200, {
@@ -479,6 +519,14 @@ const server = http.createServer((req, res) => {
     return;
   }
   if (pathname === '/love-and-hip-hop' || pathname === '/love-and-hip-hop/') {
+    serveStatic(req, res, PUBLIC_DIR, 'index.html');
+    return;
+  }
+  if (pathname === '/reunion' || pathname === '/reunion/') {
+    serveStatic(req, res, PUBLIC_DIR, 'reunion.html');
+    return;
+  }
+  if (pathname === '/sneak-peek' || pathname === '/sneak-peek/') {
     serveStatic(req, res, PUBLIC_DIR, 'index.html');
     return;
   }
@@ -503,7 +551,7 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // /media/<file> and /<file>.mp4 → the file if it exists, else the lhhny show video
+  // /media/<file> and /<file>.mp4 → the file if it exists, else the sneak-peek show video
   if (pathname.startsWith('/media/') || (pathname.startsWith('/') && VIDEO_EXT.includes(path.extname(pathname).toLowerCase()))) {
     const name = path.basename(pathname);
     const direct = safeJoin(ROOT, name);
@@ -512,7 +560,7 @@ const server = http.createServer((req, res) => {
       return;
     }
     const looksLikeVideo = VIDEO_EXT.includes(path.extname(name).toLowerCase()) || name.toLowerCase() === PRIMARY_NAME.toLowerCase();
-    const found = looksLikeVideo ? findShowVideo('lhhny') : null;
+    const found = looksLikeVideo ? findShowVideo('peek') : null;
     if (found) {
       streamVideo(req, res, found.file, { download: parsed.searchParams.get('download') === '1' });
       return;
@@ -577,7 +625,8 @@ function listen(port, attemptsLeft = 12) {
     if (lan) console.log(`  Network:  http://${lan.address}:${port}`);
     console.log(`  Root:     ${ROOT}`);
     console.log('');
-    console.log(`  Pages    /                              Love & Hip Hop: New York · S3 E14`);
+    console.log(`  Pages    /                              Love & Hip Hop: New York · S3 Sneak Peek`);
+    console.log(`           /reunion                        Love & Hip Hop: New York · Reunion Part 2`);
     console.log(`           /basketball-wives               Basketball Wives · Reunion Sneak Peek`);
     console.log('');
     for (const key of Object.keys(SHOWS)) {

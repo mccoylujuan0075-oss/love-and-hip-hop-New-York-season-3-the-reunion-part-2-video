@@ -1,13 +1,23 @@
-# Love & Hip Hop New York — Season 3: The Reunion Part 2
+# Love & Hip Hop: New York — Season 3
 
-All new Love and Hip Hop: The Reunion Part 2 Mon + 8/7C on VH1
+Watch pages for the **Season 3 Sneak Peek** ("Love & Hip Hop Special", Dec 1 2012), the **Reunion: Part 2**
+(Apr 15 2013), and the **Basketball Wives Reunion Sneak Peek**.
 
-Two complete, working watch pages sharing one player — `YouTube.mp4` in, cinematic player out.
+> The repository's original subject — *Love & Hip Hop: New York*, Season 3, "The Reunion Part 2" — is now at
+> **`/reunion`**. The landing page at **`/`** is the **Season 3 Sneak Peek**, which is the page that owns
+> **`YouTube.mp4`**.
+
+Three watch pages sharing one player — drop in a file, get a cinematic player.
 
 | Page | Route | Video it streams |
 | --- | --- | --- |
-| **Love & Hip Hop: New York** — S3 E14 "Reunion: Part 2" | `/` | `YouTube.mp4` |
-| **Basketball Wives** — Reunion Sneak Peek | `/basketball-wives` | `Basketball Wives Reunion Sneak Peek.mp4` (falls back to a generated placeholder reel) |
+| **Love & Hip Hop: New York** — **Season 3 Sneak Peek** (the grounding page) | `/` | `YouTube.mp4` → falls back to a generated placeholder reel |
+| **Love & Hip Hop: New York** — S3 E14 "Reunion: Part 2" | `/reunion` | `Love & Hip Hop Reunion Part 2.mp4` |
+| **Basketball Wives** — Reunion Sneak Peek | `/basketball-wives` | `Basketball Wives Reunion Sneak Peek.mp4` → falls back to a generated placeholder reel |
+
+**No clip in the repo yet?** The two pages that have one stream an original generated **placeholder reel** so the
+player, chapters, seeking and resume are all demonstrable right now — watermarked `PLACEHOLDER` throughout, no
+broadcast footage. Put the real file in place and it takes over on reload.
 
 [![Watch](https://img.shields.io/badge/watch-npm%20start-f0c75e)](#quick-start)
 [![Episode](https://img.shields.io/badge/S3%20E14-Reunion%20Part%202-7c3aed)](#episode-details)
@@ -61,15 +71,19 @@ video into it (see below). Nothing else on the page is blocked by it.
 
 The server looks for the file in this order and picks the first one it finds:
 
-**Love & Hip Hop page (`/`)** — expects `YouTube.mp4`:
+**Love & Hip Hop: Season 3 Sneak Peek (`/`)** — expects **`YouTube.mp4`**:
 
 1. `$VIDEO_FILE` — explicit path override
 2. **`YouTube.mp4` in the repository root** ← the expected spot
-3. Any other `.mp4` `.m4v` `.mkv` `.mov` `.avi` `.webm` in the root
-4. `assets/videos/` · `assets/` · `media/` · `video/` · `public/` · `assets/media/` (same name first)
+3. `Love and Hip Hop Season 3 Sneak Peek.mp4` · `Love & Hip Hop Special.mp4` · `sneak-peek.mp4`
+4. The same names in `media/` · `assets/videos/` · `assets/` · `video/` · `public/`
 5. `$VIDEO_URL` — stream straight from a CDN
+6. `media/placeholder/lhhny-season-3-sneak-peek-reel.mp4` — the generated placeholder, until 1–5 exist
 
-**Basketball Wives page (`/basketball-wives`)** — expects `Basketball Wives Reunion Sneak Peek.mp4`
+**Love & Hip Hop: Reunion Part 2 (`/reunion`)** — expects **`Love & Hip Hop Reunion Part 2.mp4`**
+(also `Love and Hip Hop Reunion Part 2.mp4`, `Reunion Part 2.mp4`). No file? That page shows its locker.
+
+**Basketball Wives (`/basketball-wives`)** — expects `Basketball Wives Reunion Sneak Peek.mp4`
 (also accepts `Basketball Wives Reunion Sneak Peek - YouTube.mp4`, `BasketballWives-Reunion-SneakPeek.mp4`,
 `basketball-wives-reunion-sneak-peek.mp4`, in the root or in `media/`). If none is present it streams
 `media/placeholder/basketball-wives-reunion-reel.mp4` — an original generated reel, watermarked `PLACEHOLDER`
@@ -156,9 +170,11 @@ A single page, no framework, ~30 KB of vanilla JS:
 | Endpoint | Returns |
 | --- | --- |
 | `GET /` | The watch page |
-| `GET /api/episode` · `GET /api/bw-episode` | Episode + show + season + cast + crew + chapters + season guide (JSON) |
-| `GET /api/video-info` · `GET /api/bw-video-info` | Whether a video was found, where, its size, and the player's target specs |
-| `GET /media/<file>` · `GET /media/<show>/stream` | The video itself — `Accept-Ranges: bytes`, HTTP 206, `?download=1` to force a download |
+| `GET /api/episode` (= `/api/peek-episode`) | Sneak peek: show + episode + cast + crew + chapters + season guide (JSON) |
+| `GET /api/reunion-episode` · `GET /api/bw-episode` | Same shape for the other two pages |
+| `GET /api/video-info` (= `/api/peek-video-info`) | Whether a video was found, where, its size, and the player's target specs |
+| `GET /api/reunion-video-info` · `GET /api/bw-video-info` | Same for the other two pages |
+| `GET /media/<file>` · `GET /media/<show>/stream` | The video itself — `Accept-Ranges: bytes`, HTTP 206, `?download=1` to force a download. `<show>` is `peek`, `reunion` or `bw` |
 | `GET /healthz` | Liveness + whether media is currently available |
 | `GET /docs/…` `GET /metadata/…` `GET /assets/…` | Read-only static mounts |
 
@@ -171,13 +187,15 @@ scrubbing, resuming and Safari playback work off a single progressive MP4.
 
 ```
 ├── README.md
-├── YouTube.mp4                ← the L&HH episode (not committed; see above)
+├── YouTube.mp4                ← the S3 Sneak Peek clip (not committed; landing page streams the placeholder)
+├── Love & Hip Hop Reunion Part 2.mp4         ← the reunion clip (optional)
 ├── Basketball Wives Reunion Sneak Peek.mp4   ← the BW clip (optional; placeholder streams without it)
 ├── media/placeholder/         generated placeholder reels (committed)
 ├── package.json               npm start / check / info / convert
 ├── .gitignore
 ├── public/                    the watch pages
-│   ├── index.html             Love & Hip Hop page
+│   ├── index.html             Season 3 Sneak Peek (landing page, owns YouTube.mp4)
+│   ├── reunion.html           Reunion: Part 2
 │   ├── basketball-wives.html  Basketball Wives page
 │   ├── styles.css             shared design system (purple/gold L&HH palette)
 │   ├── bw.css                 Basketball Wives theme layer (court amber)
@@ -192,10 +210,13 @@ scrubbing, resuming and Safari playback work off a single progressive MP4.
 ├── docs/
 │   ├── episode-guide.md       L&HH: run of show, threads, production credits
 │   ├── cast-info.md           L&HH: host, cast, guests, crew
+│   ├── sneak-peek.md          S3 Sneak Peek: what the special is, where the file goes
 │   └── basketball-wives-clip.md   BW: clip notes + what still needs verifying
 ├── metadata/
 │   ├── episode-data.json                  L&HH: single source of truth for the page
 │   ├── timestamps.json                    L&HH: chapter markers + runtime
+│   ├── sneak-peek-data.json               Sneak peek: special data, cast, timeline
+│   ├── sneak-peek-timestamps.json         Sneak peek: real timecodes for the placeholder reel
 │   ├── basketball-wives-data.json         BW: clip data, cast, season context
 │   └── basketball-wives-timestamps.json   BW: real timecodes for the placeholder reel
 ├── scripts/
@@ -255,6 +276,7 @@ When the real video isn't in the repo, a page can still demonstrate the entire p
 broadcast footage, and its chapter markers are genuinely accurate for that file.
 
 ```bash
+npm run peek:reel   # rebuild the S3 Sneak Peek reel + poster + chapter JSON
 npm run reel        # rebuild the Basketball Wives reel + poster + chapter JSON
 ```
 
@@ -333,6 +355,7 @@ Keep video files out of commits.
 | Seeking jumps back to the start | Your server isn't honoring range requests. Use `npm start`, which does |
 | Port 3000 is taken | `PORT=8080 npm start` (the server also auto-increments if the port is busy) |
 | Metadata changes don't show up | The JSON is fetched fresh each load — hard-reload the page; check `/api/episode` responds |
+| The landing page plays a placeholder | Expected until `YouTube.mp4` is in the repo — drop it in and reload |
 | Basketball Wives page plays a placeholder | Expected until `Basketball Wives Reunion Sneak Peek.mp4` is in the repo — drop it in and reload |
 | Placeholder reel won't render | Needs ffmpeg built with libfreetype (for `drawtext`); court artwork additionally needs ImageMagick |
 

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Love &amp; Hip Hop New York · Season 3 · The Reunion Part 2</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #ffffff;
+      background: linear-gradient(
+        135deg,
+        #ff0000 0%,
+        #ff7f00 16%,
+        #ffff00 32%,
+        #00ff00 48%,
+        #00ffff 64%,
+        #0000ff 80%,
+        #8b00ff 100%
+      );
+      background-attachment: fixed;
+    }
+
+    .wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
+
+    .stripe {
+      height: 14px;
+      background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff);
+    }
+
+    header {
+      text-align: center;
+      padding: 28px 16px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      line-height: 1.1;
+      background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #ff00ff, #ff0000);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 1.25rem;
+      font-style: italic;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .panel {
+      background: #000000;
+      border-radius: 18px;
+      padding: 22px;
+      margin-top: 24px;
+      box-shadow: 0 0 0 5px #ff0000, 0 0 0 10px #ffff00, 0 0 0 15px #00ff00, 0 0 0 20px #0000ff, 0 0 0 25px #8b00ff;
+    }
+
+    .panel h2 {
+      margin: 0 0 16px;
+      font-size: 1.6rem;
+      color: #ffff00;
+    }
+
+    video {
+      display: block;
+      width: 100%;
+      max-height: 70vh;
+      background: #000000;
+      border-radius: 10px;
+    }
+
+    .details {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .details li {
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff);
+      color: #000000;
+      font-weight: bold;
+    }
+
+    .details span {
+      display: block;
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: #000000;
+    }
+
+    footer {
+      margin-top: 32px;
+      text-align: center;
+      font-size: 0.95rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <div class="stripe"></div>
+
+  <main class="wrap">
+    <header>
+      <h1>Love &amp; Hip Hop New York</h1>
+      <p class="subtitle">Season 3 · The Reunion Part 2</p>
+    </header>
+
+    <section class="panel" aria-labelledby="watch-title">
+      <h2 id="watch-title">Watch</h2>
+      <video controls preload="metadata" playsinline>
+        <source src="assets/video/girl.mp4" type="video/mp4">
+        Your browser can't play this video. Add the file at assets/video/girl.mp4 to play it here.
+      </video>
+    </section>
+
+    <section class="panel" aria-labelledby="info-title">
+      <h2 id="info-title">Episode Info</h2>
+      <ul class="details">
+        <li>Show<span>Love &amp; Hip Hop New York</span></li>
+        <li>Season<span>3</span></li>
+        <li>Special<span>The Reunion Part 2</span></li>
+        <li>Air Date<span>Mondays</span></li>
+        <li>Time<span>8/7C</span></li>
+        <li>Network<span>VH1</span></li>
+      </ul>
+    </section>
+
+    <footer>
+      All content rights belong to VH1 and their respective owners.
+    </footer>
+  </main>
+
+  <div class="stripe"></div>
+</body>
+</html>

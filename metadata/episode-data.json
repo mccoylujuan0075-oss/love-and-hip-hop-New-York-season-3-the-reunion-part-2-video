@@ -1,0 +1,35 @@
+{
+  "show": "Love & Hip Hop: New York",
+  "season": 3,
+  "season_air_window": {
+    "start": "2013-01-07",
+    "end": "2013-04-15"
+  },
+  "season_episode_count": 14,
+  "episode": {
+    "title": "Reunion – Part 2",
+    "season_episode_number": 14,
+    "series_episode_number": 34,
+    "original_air_date": "2013-04-15",
+    "original_air_day": "Monday",
+    "network": "VH1",
+    "runtime_minutes": 42,
+    "rating": "TV-14",
+    "us_viewers_millions": 2.35,
+    "host": "Mona Scott-Young",
+    "synopsis": "The cast meets again to address the issues, the beef, and the madness from during and after filming."
+  },
+  "video_file": {
+    "path": "assets/video/girl.mp4",
+    "stored_in_git": false
+  },
+  "verification": {
+    "air_date_and_numbers": "Wikipedia, 'List of Love & Hip Hop: New York episodes' and season 3 article",
+    "air_days_and_runtime": "TV Guide episode guide, season 3",
+    "rating": "IMDb, 'Reunion - Part 2' (2013)"
+  },
+  "notes": [
+    "The README says 'Mon + 8/7C'. The 2013 broadcast was on a Monday, but the 8/7C time has not been verified.",
+    "The README's video specs (1080p, 29.97 fps, H.264, AAC 128 kbps) describe the video file and have not been checked against the file yet. Use scripts/metadata-parser.py to check."
+  ]
+}

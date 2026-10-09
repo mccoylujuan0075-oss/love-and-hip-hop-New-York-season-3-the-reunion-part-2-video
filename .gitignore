@@ -1,0 +1,12 @@
+# Large and generated media: keep the video files local, not in Git.
+assets/video/*.mp4
+assets/video/*.m4v
+assets/video/*.mkv
+assets/video/*.mov
+assets/video/*.avi
+
+# Python and OS junk
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

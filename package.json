@@ -26,7 +26,9 @@
     "bw:reel": "npm run reel",
     "bw:info": "python3 scripts/metadata-parser.py media/placeholder/basketball-wives-reunion-reel.mp4",
     "peek:reel": "bash scripts/make-placeholder-reel.sh --show \"Love & Hip Hop: New York\" --subtitle \"Season 3 Sneak Peek\" --out media/placeholder/lhhny-season-3-sneak-peek-reel.mp4 --poster public/assets/posters/sneak-peek-poster.jpg --chapters metadata/sneak-peek-timestamps.json --duration 151",
-    "peek:info": "python3 scripts/metadata-parser.py media/placeholder/lhhny-season-3-sneak-peek-reel.mp4"
+    "peek:info": "python3 scripts/metadata-parser.py media/placeholder/lhhny-season-3-sneak-peek-reel.mp4",
+    "build:s2e7": "bash scripts/build-s2e7.sh",
+    "check:s2e7": "bash scripts/build-s2e7.sh --check"
   },
   "dependencies": {},
   "devDependencies": {}

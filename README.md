@@ -379,3 +379,41 @@ For questions or suggestions, please open an issue.
 ---
 
 **Last Updated:** 2026-10-02
+
+---
+
+## Season 2, Episode 7 — Sneak Peek (HLS)
+
+A separate, self-contained watch page that streams **HLS only**.
+
+```
+npm run build:s2e7                               # build + verify
+npm run build:s2e7 -- --stream https://…/x.m3u8  # bake your playlist in
+npm start                                        # → http://localhost:3000/s2e7
+```
+
+| Piece | Path |
+| --- | --- |
+| Page | `public/s2e7.html` |
+| Styles (hand-written, VH1 2012 gold) | `public/s2e7.css` |
+| Player controller | `public/s2e7.js` |
+| HLS engine (vendored, no CDN) | `public/vendor/hls.min.js` |
+| Stream config | `metadata/s2e7-stream.json` |
+| Episode data / chapters | `metadata/s2e7-data.json` |
+| Build script | `scripts/build-s2e7.sh` |
+| Photography | `public/assets/photos/` |
+
+**Setting the stream** — any one of these, first match wins:
+
+1. `?src=https://…/playlist.m3u8` in the URL
+2. the source bar on the page (saved to `localStorage`)
+3. `S2E7_M3U8=https://…/playlist.m3u8 npm start`
+4. `primary.url` in `metadata/s2e7-stream.json`
+5. the entries in `fallbacks[]`
+
+Anything that is not an `.m3u8` is rejected by both the player and the build script.
+
+**Rules this page is built under** (enforced by `scripts/build-s2e7.sh`): no mp4 or
+`promo.mp4`, no Pluto TV / YouTube / archive.org / Dailymotion / third-party embeds,
+no AI-generated images, posters, assets, shapes, speech or scripts, no hand-coded SVG
+artwork, no CSS keyframe animation, no Tailwind, no stock-photo libraries.

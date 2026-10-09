@@ -1,0 +1,37 @@
+{
+  "id": "lhhny-s2e7-sneak-peek",
+  "show": "Love & Hip Hop: New York",
+  "season": 2,
+  "episode": 7,
+  "title": "Sneak Peek",
+  "network": "VH1",
+  "year": 2012,
+  "format": "HLS",
+  "container": "m3u8",
+  "notes": [
+    "This page is HLS-only. No mp4, no promo.mp4, no progressive download.",
+    "`primary` is the stream the player loads first. Drop your own .m3u8 in here.",
+    "Anything in `fallbacks` is tried in order if the primary playlist fails to load.",
+    "A URL pasted into the page's source bar overrides this file and is remembered in localStorage."
+  ],
+  "primary": {
+    "label": "S2 E7 Sneak Peek — HLS",
+    "url": "",
+    "type": "application/vnd.apple.mpegurl"
+  },
+  "fallbacks": [
+    {
+      "label": "Multi-bitrate HLS check stream",
+      "url": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+      "type": "application/vnd.apple.mpegurl"
+    }
+  ],
+  "player": {
+    "autoplay": false,
+    "muted": false,
+    "startLevel": -1,
+    "lowLatencyMode": false,
+    "backBufferLength": 90,
+    "capLevelToPlayerSize": true
+  }
+}

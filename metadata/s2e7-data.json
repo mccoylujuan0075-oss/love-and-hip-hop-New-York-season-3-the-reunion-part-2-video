@@ -1,0 +1,60 @@
+{
+  "show": {
+    "title": "Love & Hip Hop: New York",
+    "network": "VH1",
+    "franchise": "Love & Hip Hop",
+    "genre": ["Reality", "Music", "Docusoap"],
+    "origin": "New York City"
+  },
+  "episode": {
+    "season": 2,
+    "number": 7,
+    "code": "S2 E7",
+    "title": "Sneak Peek",
+    "network": "VH1",
+    "broadcastYear": 2012,
+    "rating": "TV-14",
+    "runtimeLabel": "Sneak peek",
+    "logline": "A first look at Season 2, Episode 7 of Love & Hip Hop: New York — the arguments that had been building all season finally spill out in the open."
+  },
+  "delivery": {
+    "protocol": "HLS",
+    "playlist": "m3u8",
+    "segments": "MPEG-2 TS / fMP4",
+    "engine": "hls.js (vendored locally, no CDN)",
+    "native": "Safari / iOS play the same .m3u8 natively",
+    "removed": [
+      "mp4 / promo.mp4 progressive files",
+      "Pluto TV",
+      "YouTube",
+      "archive.org",
+      "Dailymotion",
+      "third-party streaming embeds"
+    ]
+  },
+  "design": {
+    "palette": {
+      "gold": "#d4af37",
+      "goldLight": "#f6dd93",
+      "goldDeep": "#8a6a12",
+      "ink": "#0a0a0c",
+      "panel": "#141418"
+    },
+    "reference": "VH1 2012 on-air gold",
+    "rules": [
+      "No AI-generated images, posters, assets, shapes or speech",
+      "No hand-coded SVG artwork",
+      "No CSS keyframe animations",
+      "No Tailwind",
+      "No stock / Pexels / hero-generator imagery",
+      "Photography only — real VH1 / Love & Hip Hop press photography"
+    ]
+  },
+  "chapters": [
+    { "label": "Cold open", "note": "Where the season left off." },
+    { "label": "The call-out", "note": "The conversation nobody wanted to have on camera." },
+    { "label": "Studio tension", "note": "Business and personal collide in the booth." },
+    { "label": "The fallout", "note": "Sides get picked." },
+    { "label": "Next on", "note": "The tease that closes the peek." }
+  ]
+}

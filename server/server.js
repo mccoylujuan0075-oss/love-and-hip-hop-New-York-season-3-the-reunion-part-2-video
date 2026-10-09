@@ -125,6 +125,9 @@ const MIME = {
   '.avi': 'video/x-msvideo',
   '.vtt': 'text/vtt; charset=utf-8',
   '.srt': 'application/x-subrip; charset=utf-8',
+  '.m3u8': 'application/vnd.apple.mpegurl',
+  '.ts': 'video/mp2t',
+  '.m4s': 'video/iso.segment',
   '.map': 'application/json; charset=utf-8'
 };
 
@@ -510,6 +513,30 @@ const server = http.createServer((req, res) => {
       supportedFormats: (data.media && data.media.supportedFormats) || ['MP4', 'M4V', 'MKV', 'AVI', 'MOV'],
       ...videoInfoFor(key)
     });
+    return;
+  }
+
+  // ── S2 E7 sneak peek (HLS / .m3u8 page) ────────────────────────────
+  if (pathname === '/api/s2e7-stream') {
+    const cfg = readJSON(path.join(METADATA_DIR, 's2e7-stream.json'));
+    if (!cfg) { sendJSON(res, 404, { ok: false, error: 'stream-config-missing' }); return; }
+    const envUrl = process.env.S2E7_M3U8 || process.env.HLS_URL || '';
+    if (envUrl && /\.m3u8(\?|#|$)/i.test(envUrl)) {
+      cfg.primary = { label: 'Environment ($S2E7_M3U8)', url: envUrl, type: 'application/vnd.apple.mpegurl' };
+    }
+    sendJSON(res, 200, cfg);
+    return;
+  }
+  if (pathname === '/api/s2e7-episode') {
+    const data = readJSON(path.join(METADATA_DIR, 's2e7-data.json'));
+    if (!data) { sendJSON(res, 404, { ok: false, error: 'episode-data-missing' }); return; }
+    sendJSON(res, 200, data);
+    return;
+  }
+  if (pathname === '/s2e7' || pathname === '/s2e7/' ||
+      pathname === '/season-2-episode-7' || pathname === '/season-2-episode-7/' ||
+      pathname === '/s2e7-sneak-peek' || pathname === '/s2e7-sneak-peek/') {
+    serveStatic(req, res, PUBLIC_DIR, 's2e7.html');
     return;
   }
 

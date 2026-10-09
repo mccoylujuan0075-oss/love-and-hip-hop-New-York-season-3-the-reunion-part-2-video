@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "1.0.0",
+  "lastUpdated": "2026-10-02",
+  "_pdfNote": "The source PDF ('Basketball Wives Reunion Sneak Peek - YouTube.pdf') attached to this request never reached the workspace — /home/user/uploads did not exist and no such file was found on disk. Everything below is compiled from the public sources listed under 'sources'. Fields marked in '_pendingVerification' are the ones a sneak-peek PDF would normally confirm (clip title, exact runtime, upload date, and which half of the season it previews).",
+  "_pendingVerification": [
+    "episode.clipTitle — exact YouTube title of the sneak peek",
+    "episode.uploadDate / publishDate — when the clip was posted",
+    "episode.runtimeSeconds — exact clip length",
+    "episode.seasonHalf — whether this sneak peek previews the 11A reunion (Jan 2024) or the 11B reunion (Sep 2024)",
+    "episode.host — John Salley (11A reunion) vs Nina Parker (11B reunion)",
+    "cast[].onReunionCouch — who actually sat on the reunion stage for this installment"
+  ],
+  "show": {
+    "title": "Basketball Wives",
+    "shortTitle": "Basketball Wives",
+    "network": "VH1",
+    "franchise": "Basketball Wives",
+    "genre": ["Reality TV", "Drama", "Sports"],
+    "country": "United States",
+    "language": "en-US",
+    "premiered": "2010-04-11",
+    "seasonsAired": 12,
+    "producers": [
+      "Truly Original",
+      "Shed Media",
+      "VH1"
+    ],
+    "logline": "Follow the daily lives of the wives, ex-wives and girlfriends of professional basketball players as they juggle business, friendship and the drama that comes with both."
+  },
+  "episode": {
+    "title": "Reunion Sneak Peek",
+    "slug": "basketball-wives-reunion-sneak-peek",
+    "type": "sneak-peek",
+    "kind": "Preview clip",
+    "clipTitle": "Basketball Wives Reunion Sneak Peek — YouTube",
+    "seasonNumber": 11,
+    "seasonHalf": "11B",
+    "seasonNotes": "Season 11 aired in two runs: 11A premiered January 8, 2024; 11B premiered July 1, 2024 and closed with the reunion on September 23, 2024.",
+    "reunionTitle": "The Reunion: Hot Mics and Spicy Drama",
+    "reunionAirDate": "2024-09-23",
+    "airDay": "Monday",
+    "timeSlot": "9/8c",
+    "host": "Nina Parker",
+    "hostNote": "John Salley hosted the 11A reunion (aired January 15, 2024); Nina Parker hosted the 11B reunion (aired September 23, 2024).",
+    "runtimeSeconds": 151,
+    "runtimeLabel": "2:31",
+    "runtimeNote": "Placeholder-reel runtime. Replace with the real clip length.",
+    "contentRating": "TV-14",
+    "logline": "A first look at the Basketball Wives reunion — the season's beefs, friendships and unfinished business, teased ahead of the full special.",
+    "themes": [
+      "Reunion special",
+      "Sneak peek",
+      "Friendship fallout",
+      "Season in review",
+      "Hot mics"
+    ],
+    "chaptersFile": "metadata/basketball-wives-timestamps.json",
+    "poster": "assets/posters/basketball-wives-reunion-poster.jpg"
+  },
+  "cast": [
+    { "name": "Nina Parker", "credit": "Host — 11B reunion", "role": "host", "initials": "NP", "pending": true },
+    { "name": "Shaunie Henderson", "credit": "Self (as Shaunie O'Neal)", "role": "main", "initials": "SH", "pending": false },
+    { "name": "Evelyn Lozada", "credit": "Self", "role": "main", "initials": "EL", "pending": false },
+    { "name": "Jennifer Williams", "credit": "Self", "role": "main", "initials": "JW", "pending": false },
+    { "name": "Jackie Christie", "credit": "Self", "role": "main", "initials": "JC", "pending": false },
+    { "name": "Brandi Maxiell", "credit": "Self", "role": "main", "initials": "BM", "pending": false },
+    { "name": "Brooke Bailey", "credit": "Self", "role": "main", "initials": "BB", "pending": false },
+    { "name": "Brittish Williams", "credit": "Self", "role": "main", "initials": "BW", "pending": false },
+    { "name": "Jac'Eil Duckworth", "credit": "Self", "role": "main", "initials": "JD", "pending": false },
+    { "name": "Clayanna Warthen", "credit": "Self", "role": "main", "initials": "CW", "pending": false },
+    { "name": "Brittany Renner", "credit": "Self", "role": "main", "initials": "BR", "pending": true },
+    { "name": "Vanessa Rider", "credit": "Self", "role": "guest", "initials": "VR", "pending": true },
+    { "name": "Noria Dorsey-Taggar", "credit": "Self", "role": "guest", "initials": "ND", "pending": true },
+    { "name": "John Salley", "credit": "Host — 11A reunion", "role": "host", "initials": "JS", "pending": false },
+    { "name": "Marc Lamont Hill", "credit": "Host — 2017–2019 reunions", "role": "archive", "initials": "MH", "pending": false },
+    { "name": "Tanika Ray", "credit": "Reunion host — season 1 (2010)", "role": "archive", "initials": "TR", "pending": false }
+  ],
+  "seasonEpisodes": [
+    { "number": 12, "title": "Season 11A finale", "airDate": "2024-01-08", "note": "11A run opens" },
+    { "number": 13, "title": "Reunion", "airDate": "2024-01-15", "note": "Hosted by John Salley" },
+    { "number": 19, "title": "This Is Beneath Me!", "airDate": "2024-08-05", "note": "11B run" },
+    { "number": 22, "title": "Season 11B, Ep. 22", "airDate": "2024-08-26", "note": "11B run" },
+    { "number": 26, "title": "The Reunion: Hot Mics and Spicy Drama", "airDate": "2024-09-23", "isCurrent": true, "note": "11B reunion — hosted by Nina Parker" }
+  ],
+  "seasonContext": {
+    "elevenA": { "premiere": "2024-01-08", "reunion": "2024-01-15", "reunionHost": "John Salley" },
+    "elevenB": { "premiere": "2024-07-01", "reunion": "2024-09-23", "reunionHost": "Nina Parker", "reunionTitle": "The Reunion: Hot Mics and Spicy Drama" },
+    "nextSeason": { "note": "Basketball Wives returned Monday, February 13, 2025 at 8/7c on VH1." }
+  },
+  "media": {
+    "primaryFile": "Basketball Wives Reunion Sneak Peek.mp4",
+    "altFileNames": [
+      "BasketballWives-Reunion-SneakPeek.mp4",
+      "Basketball Wives Reunion Sneak Peek - YouTube.mp4",
+      "basketball-wives-reunion-sneak-peek.mp4"
+    ],
+    "placeholderReel": "media/placeholder/basketball-wives-reunion-reel.mp4",
+    "searchPaths": [
+      "Basketball Wives Reunion Sneak Peek.mp4",
+      "BasketballWives-Reunion-SneakPeek.mp4",
+      "basketball-wives-reunion-sneak-peek.mp4",
+      "media/Basketball Wives Reunion Sneak Peek.mp4",
+      "assets/videos/Basketball Wives Reunion Sneak Peek.mp4",
+      "media/placeholder/basketball-wives-reunion-reel.mp4"
+    ],
+    "supportedFormats": ["MP4", "M4V", "MKV", "AVI", "MOV"],
+    "specs": {
+      "resolution": "1920x1080",
+      "resolutionLabel": "1080p (Full HD)",
+      "frameRate": 29.97,
+      "videoCodec": "H.264 (AVC)",
+      "audioCodec": "AAC",
+      "audioBitrateKbps": 96,
+      "container": "MP4",
+      "aspectRatio": "16:9"
+    },
+    "placeholder": {
+      "isPlaceholder": true,
+      "generator": "scripts/make-placeholder-reel.sh",
+      "note": "Until the real clip is in the repository, the player streams an original generated placeholder reel — clearly watermarked, containing no broadcast footage. Drop the real file at one of the search paths above and the player switches to it automatically."
+    },
+    "streaming": {
+      "rangeRequests": true,
+      "dashOrHls": false,
+      "note": "Served progressively over HTTP with byte-range support so the player can seek instantly."
+    }
+  },
+  "sources": [
+    { "label": "IMDb — Basketball Wives S11.E13 \"Reunion\" (aired January 15, 2024)", "url": "https://www.imdb.com/title/tt30700280/" },
+    { "label": "IMDb — Basketball Wives full cast & crew (hosts across seasons)", "url": "https://www.imdb.com/title/tt1637756/fullcredits/" },
+    { "label": "Rotten Tomatoes — Basketball Wives season 11 episode guide", "url": "https://www.rottentomatoes.com/tv/basketball_wives/s11" },
+    { "label": "E! News — Basketball Wives season 10 cast and first sneak peek", "url": "https://www.eonline.com/news/1327386/basketball-wives-returns-with-cast-full-of-mvps-in-dramatic-first-sneak-peek" },
+    { "label": "Collider — Evelyn Lozada returns for season 11 with four new cast members", "url": "https://collider.com/basketball-wives-season-11-evelyn-lozada-brittish-williams-new-cast/" },
+    { "label": "TheWrap — season 11 cast and promotional video", "url": "https://www.thewrap.com/basketball-wives-season-11-evelyn-lozada-jennifer-williams/" },
+    { "label": "Syracuse.com — season 11 reunion air date and title", "url": "https://www.syracuse.com/tv/2024/09/how-to-watch-basketball-wives-season-11-reunion-episode-for-fee-on-vh1.html" },
+    { "label": "Wikipedia — List of Basketball Wives episodes", "url": "https://en.wikipedia.org/wiki/List_of_Basketball_Wives_episodes" }
+  ],
+  "rights": "This repository is for informational and archival purposes only. Basketball Wives and all related marks, footage and artwork are the property of VH1 / Paramount and their respective owners. No rights are granted or implied. No broadcast footage is included — the placeholder reel is original generated graphics."
+}

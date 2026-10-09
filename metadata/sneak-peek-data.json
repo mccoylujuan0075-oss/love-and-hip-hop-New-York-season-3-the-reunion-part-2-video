@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "1.0.0",
+  "lastUpdated": "2026-10-02",
+  "_note": "This page is about the SEASON 3 SNEAK PEEK — the 'Love & Hip Hop Special' (S3.E0) that aired December 1, 2012 — not the Reunion. The reunion page still exists at /reunion.",
+  "_pendingVerification": [
+    "media.clipSource — no video file is in the repository yet; the player streams an original generated placeholder reel",
+    "episode.runtimeSeconds — placeholder-reel runtime until the real clip is supplied",
+    "episode.broadcastTime — the exact 2012 time slot for the special (reported as a Saturday 42-minute special; 8/7c is the franchise norm but unconfirmed for this date)",
+    "cast.presentInSpecial — which cast members actually appear in the sneak peek footage"
+  ],
+  "show": {
+    "title": "Love & Hip Hop: New York",
+    "shortTitle": "Love & Hip Hop NY",
+    "network": "VH1",
+    "franchise": "Love & Hip Hop",
+    "genre": ["Reality TV", "Music", "Drama"],
+    "country": "United States",
+    "language": "en-US",
+    "premiered": "2011-03-06",
+    "producers": ["Mona Scott-Young (Monami Entertainment)", "Toby Barraud (NFGTV)", "Stefan Springman (NFGTV)"]
+  },
+  "season": {
+    "number": 3,
+    "episodeCount": 14,
+    "airedFrom": "2013-01-07",
+    "airedTo": "2013-04-15",
+    "note": "The third season of Love & Hip Hop: New York aired January 7 – April 15, 2013 on VH1, with 14 episodes plus this pre-season special."
+  },
+  "episode": {
+    "title": "Love & Hip Hop Special — Season 3 Sneak Peek",
+    "shortTitle": "Season 3 Sneak Peek",
+    "slug": "season-3-sneak-peek",
+    "type": "sneak-peek",
+    "kind": "Pre-season special",
+    "seasonNumber": 3,
+    "episodeNumber": 0,
+    "episodeLabel": "S3 · Special",
+    "airDate": "2012-12-01",
+    "airDay": "Saturday",
+    "runtimeMinutes": 42,
+    "runtimeLabel": "42 min",
+    "contentRating": "TV-14",
+    "network": "VH1",
+    "logline": "An exclusive sneak peek at the upcoming Love & Hip Hop Season 3 — plus a behind-the-scenes look at the taping of Love & Hip Hop Atlanta.",
+    "synopsis": "Aired about five weeks before the Season 3 premiere, this special is the franchise's first look at the new-look New York cast. The third season rebuilt the show around Yandy Smith and Rich Dollaz, promoted Erica Mena to the main cast and brought in Winter Ramos, with Joe Budden, Consequence, Tahiry Jose, Raqi Thunda, Jen the Pen, Rashidah Ali and Olivia Longott filling out the ensemble. The special mixes sneak-peek footage with a behind-the-scenes visit to the Love & Hip Hop: Atlanta taping.",
+    "whyItMatters": "It is the earliest broadcast look at the season — the cast, the storylines and the tone five weeks before 'The Whole Truth and Nothing But the Truth' premiered on January 7, 2013.",
+    "themes": ["Sneak peek", "Pre-season special", "New cast reveal", "Behind the scenes", "Crossover with LHH Atlanta"],
+    "chaptersFile": "metadata/sneak-peek-timestamps.json",
+    "poster": "assets/posters/sneak-peek-poster.jpg"
+  },
+  "cast": [
+    { "name": "Mona Scott-Young", "credit": "Executive Producer", "role": "host", "initials": "MS", "pending": true },
+    { "name": "Erica Mena", "credit": "Self", "role": "main", "initials": "EM", "pending": false },
+    { "name": "Yandy Smith-Harris", "credit": "Self (as Yandy Smith)", "role": "main", "initials": "YS", "pending": true },
+    { "name": "Rich Dollaz", "credit": "Self", "role": "main", "initials": "RD", "pending": true },
+    { "name": "Joe Budden", "credit": "Self", "role": "main", "initials": "JB", "pending": true },
+    { "name": "Consequence", "credit": "Self", "role": "main", "initials": "CQ", "pending": true },
+    { "name": "Tahiry Jose", "credit": "Self", "role": "main", "initials": "TJ", "pending": true },
+    { "name": "Raqi Thunda", "credit": "Self", "role": "main", "initials": "RT", "pending": true },
+    { "name": "Jen Bayer", "credit": "Self (as Jen the Pen)", "role": "main", "initials": "JB", "pending": true },
+    { "name": "Winter Ramos", "credit": "Self", "role": "main", "initials": "WR", "pending": true },
+    { "name": "Rashidah Ali", "credit": "Self", "role": "main", "initials": "RA", "pending": true },
+    { "name": "Olivia Longott", "credit": "Self", "role": "guest", "initials": "OL", "pending": true },
+    { "name": "Kaylin Garcia", "credit": "Self", "role": "guest", "initials": "KG", "pending": true },
+    { "name": "Lore'l", "credit": "Self", "role": "guest", "initials": "LO", "pending": true }
+  ],
+  "crew": [
+    { "name": "Mona Scott-Young", "department": "Executive Producer — Monami Entertainment" },
+    { "name": "Toby Barraud", "department": "Executive Producer — NFGTV" },
+    { "name": "Stefan Springman", "department": "Executive Producer — NFGTV" },
+    { "name": "Shelly Tatro", "department": "VH1" },
+    { "name": "Brad Abramson", "department": "VH1" },
+    { "name": "Danielle Gelfand", "department": "VH1" },
+    { "name": "Jeff Olde", "department": "VH1" },
+    { "name": "Monami Entertainment", "department": "Production Company" },
+    { "name": "NFGTV", "department": "Production Company" },
+    { "name": "Interloc Films", "department": "Production Company" }
+  ],
+  "seasonEpisodes": [
+    { "number": 0, "title": "Love & Hip Hop Special (Season 3 Sneak Peek)", "airDate": "2012-12-01", "isCurrent": true, "note": "This special" },
+    { "number": 1, "title": "The Whole Truth and Nothing But the Truth", "airDate": "2013-01-07", "note": "Season 3 premiere" },
+    { "number": 2, "title": "Raq and a Hard Place", "airDate": "2013-01-14" },
+    { "number": 5, "title": "Can't Take the Heat", "airDate": "2013-02-04" },
+    { "number": 13, "title": "The Reunion (Part I)", "airDate": "2013-04-09" },
+    { "number": 14, "title": "Reunion: Part 2", "airDate": "2013-04-15", "note": "See the /reunion page" }
+  ],
+  "seasonContext": {
+    "announcement": { "date": "2012-12-04", "note": "VH1 announced the third season would return January 7, 2013 — three days after this special aired." },
+    "castRebuild": { "note": "Rich Dollaz and Yandy Smith were the only major cast members carried over from seasons 1–2, with Yandy taking over as lead after Chrissy Lampkin's exit. Erica Mena was promoted to main cast and Winter Ramos joined." },
+    "promos": [
+      { "title": "New Season", "length": "00:30", "released": "2012-12-19" },
+      { "title": "Super Trailer", "length": "03:55", "released": "2012-12-24" }
+    ]
+  },
+  "media": {
+    "primaryFile": "YouTube.mp4",
+    "altFileNames": [
+      "Love and Hip Hop Season 3 Sneak Peek.mp4",
+      "Love & Hip Hop Special.mp4",
+      "sneak-peek.mp4"
+    ],
+    "searchPaths": [
+      "YouTube.mp4",
+      "Love and Hip Hop Season 3 Sneak Peek.mp4",
+      "Love & Hip Hop Special.mp4",
+      "media/YouTube.mp4",
+      "media/placeholder/lhhny-season-3-sneak-peek-reel.mp4"
+    ],
+    "supportedFormats": ["MP4", "M4V", "MKV", "AVI", "MOV"],
+    "specs": {
+      "resolution": "1920x1080",
+      "resolutionLabel": "1080p (Full HD)",
+      "frameRate": 29.97,
+      "videoCodec": "H.264 (AVC)",
+      "audioCodec": "AAC",
+      "audioBitrateKbps": 96,
+      "container": "MP4",
+      "aspectRatio": "16:9"
+    },
+    "placeholder": {
+      "isPlaceholder": true,
+      "generator": "scripts/make-placeholder-reel.sh",
+      "file": "media/placeholder/lhhny-season-3-sneak-peek-reel.mp4",
+      "note": "No real clip is in the repository. The player streams this original generated reel instead — watermarked PLACEHOLDER throughout, containing no broadcast footage. Put the real file at YouTube.mp4 in the repository root and reload; the player switches over with no restart."
+    },
+    "streaming": {
+      "rangeRequests": true,
+      "dashOrHls": false,
+      "note": "Progressive MP4 over HTTP with byte-range support so seeking is instant."
+    }
+  },
+  "howToGetTheRealFile": [
+    "Drop your own copy at YouTube.mp4 in the repository root and reload — no restart needed.",
+    "Drag the file straight onto the player to preview it without putting it on the server.",
+    "Stream from a URL you are entitled to use: VIDEO_URL=https://…/clip.mp4 npm start",
+    "Official sources for the special: VH1.com / Paramount+ (and the VH1 YouTube channel, where this clip was originally viewed)."
+  ],
+  "sources": [
+    { "label": "IMDb — Love and Hip Hop: New York, S3.E0 'Love & Hip Hop Special' (Dec 2012)", "url": "https://www.imdb.com/title/tt3010758/" },
+    { "label": "TV Guide — Love and Hip Hop: New York season 3 episode guide (Love & Hip Hop Special, Sat Dec 1, 2012, 42 mins)", "url": "https://www.tvguide.com/tvshows/love-and-hip-hop-new-york/episodes-season-3/1060208226/" },
+    { "label": "Wikipedia — Love & Hip Hop: New York season 3", "url": "https://en.wikipedia.org/wiki/Love_%26_Hip_Hop:_New_York_season_3" },
+    { "label": "Wikipedia — Love & Hip Hop franchise history and specials", "url": "https://en.wikipedia.org/wiki/Love_%26_Hip_Hop" },
+    { "label": "Hip-Hop Wired — the special that carried the season 3 sneak peek", "url": "https://hiphopwired.com/198212/vh1s-love-hip-hop-atlanta-dirty-little-secrets-special-premiers-in-december/" }
+  ],
+  "rights": "This repository is for informational and archival purposes only. Love & Hip Hop, Love & Hip Hop: New York and all related marks, footage and artwork are the property of VH1 / Paramount and their respective owners. No rights are granted or implied. No broadcast footage is included — the video on this page is an original generated placeholder."
+}

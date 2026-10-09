@@ -1,0 +1,17 @@
+{
+  "_note": "REAL timecodes for the generated placeholder reel. Accurate for that file; replace the whole file when you drop the real video in.",
+  "_placeholder": false,
+  "_forPlaceholderReel": true,
+  "runtimeSeconds": 151,
+  "runtimeLabel": "2:31",
+  "chapters": [
+    { "id": "seg-1", "title": "Title Card", "start": 0, "end": 9, "blurb": "Show card and the placeholder warning.", "tag": "Intro" },
+    { "id": "seg-2", "title": "What You Are Watching", "start": 9, "end": 30, "blurb": "An original placeholder reel generated for this repository.", "tag": "About" },
+    { "id": "seg-3", "title": "Why It Exists", "start": 30, "end": 54, "blurb": "The real episode file is not in the repository yet.", "tag": "About" },
+    { "id": "seg-4", "title": "Swap It In", "start": 54, "end": 79, "blurb": "Drop your video in the repo and reload - this reel steps aside.", "tag": "How to" },
+    { "id": "seg-5", "title": "What Is Wired Up", "start": 79, "end": 103, "blurb": "Player, chapters, seeking, resume, cast grid and episode data.", "tag": "Features" },
+    { "id": "seg-6", "title": "Try It", "start": 103, "end": 127, "blurb": "Scrub the bar, jump chapters, go fullscreen or theater.", "tag": "Demo" },
+    { "id": "seg-7", "title": "Chapters Are Live", "start": 127, "end": 142, "blurb": "Timeline markers match this reel exactly.", "tag": "Demo" },
+    { "id": "seg-8", "title": "Replace Me", "start": 142, "end": 151, "blurb": "Put your real file in the repository and reload.", "tag": "Outro" }
+  ]
+}
